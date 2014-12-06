@@ -1,0 +1,18 @@
+Package: sessionreconstruct
+Type: Package
+Title: Session Reconstruction and Analysis
+Version: 1.0
+Date: 2014-12-06
+Author: Oliver Keyes
+Maintainer: Oliver Keyes <ironholds@gmail.com>
+Description: sessionreconstruct provides functions to aid in reconstructing and
+    analysing user sessions. Although primarily designed for web sessions (see
+    the 'session reconstruction methodology' vignette), its
+    approach is plausibly applicable to other domains, and the
+    analytical functions also provided in the package should be generalisable.
+License: MIT + file LICENSE
+LinkingTo: Rcpp
+Imports:
+    Rcpp
+Suggests:
+    testthat
