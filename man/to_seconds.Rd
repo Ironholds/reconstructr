@@ -26,7 +26,7 @@ as seconds, enabling them to be consumed by \code{\link{sessionise}}.
 \examples{
 #Converting non-POSIX timestamps to seconds
 data("session_dataset")
-data$timestamp <- to_seconds(x = data$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
+session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
 
 #Converting POSIX timestamps
 current_time_in_seconds <- to_seconds(x = Sys.time())
