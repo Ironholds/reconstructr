@@ -23,6 +23,14 @@ their numeric value (represented in seconds).
 \code{to_seconds} is designed to enable the rapid conversion of timestamps into their representation
 as seconds, enabling them to be consumed by \code{\link{sessionise}}.
 }
+\examples{
+#Converting non-POSIX timestamps to seconds
+data("session_dataset")
+data$timestamp <- to_seconds(x = data$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
+
+#Converting POSIX timestamps
+current_time_in_seconds <- to_seconds(x = Sys.time())
+}
 \seealso{
 \code{\link{sessionise}} for making use of the new values.
 }

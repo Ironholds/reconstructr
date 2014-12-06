@@ -14,6 +14,14 @@
 #'@return a vector of second-values, one for each timestamp.
 #'
 #'@seealso \code{\link{sessionise}} for making use of the new values.
+#'
+#'@examples
+#'#Converting non-POSIX timestamps to seconds
+#'data("session_dataset")
+#'data$timestamp <- to_seconds(x = data$timestamp, format = "%Y%m%d%H%M%S")
+#'
+#'#Converting POSIX timestamps
+#'current_time_in_seconds <- to_seconds(x = Sys.time())
 #'@export
 to_seconds <- function(x, format){
   if(any(c("POSIXlt","POSIXct") %in% class(x))){
