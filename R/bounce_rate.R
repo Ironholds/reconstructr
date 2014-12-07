@@ -10,6 +10,17 @@
 #'
 #'@seealso \code{\link{session_events}} for generaliseable event-level calculations.
 #'
+#'@examples
+#'#Calculate the bounce rate in the provided dataset.
+#'#Load, convert timestamps to seconds, split
+#'data("session_dataset")
+#'session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
+#'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
+#'
+#'#Sessionise and calculate bounce rate
+#'sessions <- sessionise(events_by_user)
+#'bounce_rate(sessions)
+#'#[1]58
 #'@export
 bounce_rate <- function(sessions, decimal_places = 2){
   events <- session_events(sessions)

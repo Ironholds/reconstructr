@@ -17,6 +17,18 @@ a single numeric value, representing the percentage of sessions that are bounces
 calculates the "bounce rate" within a set of sessions - the proportion of sessions
 consisting only of a single event.
 }
+\examples{
+#Calculate the bounce rate in the provided dataset.
+#Load, convert timestamps to seconds, split
+data("session_dataset")
+session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
+events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
+
+#Sessionise and calculate bounce rate
+sessions <- sessionise(events_by_user)
+bounce_rate(sessions)
+#[1]58
+}
 \seealso{
 \code{\link{session_events}} for generaliseable event-level calculations.
 }
