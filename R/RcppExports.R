@@ -23,9 +23,15 @@
 #'The returned list can be conveniently
 #'passed into \code{\link{session_length}} or \code{\link{session_events}} for further analysis.
 #'
-#'@seealso \code{\link{session_length}} for calculating session length, and
-#'\code{\link{session_events}} for calculating the number of pages in each session.
+#'@seealso \code{\link{session_length}} for calculating session length, \code{\link{bounce_rate}} for
+#'calculating the bounce rate, and \code{\link{session_events}} for calculating the number of events in each session.
 #'
+#'@examples
+#'#Take the inbuilt dataset and sessionise it
+#'data("session_dataset")
+#'session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
+#'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
+#'sessions <- sessionise(events_by_user)
 #'@export
 sessionise <- function(timestamps, threshold = 3600L) {
     .Call('sessionreconstruct_sessionise', PACKAGE = 'sessionreconstruct', timestamps, threshold)

@@ -26,8 +26,15 @@ split a series of timestamps (or a series of series) associated with UUIDs, into
 enabling the simple calculation of various metrics such as session length or the number of events
 within a session.
 }
+\examples{
+#Take the inbuilt dataset and sessionise it
+data("session_dataset")
+session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
+events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
+sessions <- sessionise(events_by_user)
+}
 \seealso{
-\code{\link{session_length}} for calculating session length, and
-\code{\link{session_events}} for calculating the number of pages in each session.
+\code{\link{session_length}} for calculating session length, \code{\link{bounce_rate}} for
+calculating the bounce rate, and \code{\link{session_events}} for calculating the number of events in each session.
 }
 

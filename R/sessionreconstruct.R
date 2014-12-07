@@ -1,6 +1,6 @@
 #'@author Oliver Keyes <okeyes@@wikimedia.org>
 #'@docType package
-#'@title foo
+#'@title functions for session reconstruction and analysis
 #'@description
 #'sessionreconstruct provides functions to aid in reconstructing and analysing user sessions.
 #'Although primarily designed for web sessions (see the 'session reconstruction methodology' vignette), its session
