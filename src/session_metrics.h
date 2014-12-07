@@ -24,13 +24,13 @@ std::vector < int > session_metrics::c_session_length(std::list < std::vector < 
   std::vector < int > output;
   std::vector < int > holding;
   int sum_holding;
-  int in_size = holding.size();
   
   //For each list entry...
   for (iterator = sessions.begin(); iterator != sessions.end(); ++iterator) {
     
     //Extract
     holding = *iterator;
+    int in_size = holding.size();
     
     //If there's only one page, return -1
     if(in_size < 2){
