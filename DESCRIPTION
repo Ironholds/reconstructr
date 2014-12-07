@@ -1,7 +1,7 @@
 Package: reconstructr
 Type: Package
 Title: Session Reconstruction and Analysis
-Version: 1.0
+Version: 0.5
 Date: 2014-12-06
 Author: Oliver Keyes
 Maintainer: Oliver Keyes <ironholds@gmail.com>
@@ -12,7 +12,9 @@ Description: sessionreconstruct provides functions to aid in reconstructing and
     analytical functions also provided in the package should be generalisable.
 License: MIT + file LICENSE
 LinkingTo: Rcpp
-Imports:
+Imports: 
     Rcpp
-Suggests:
-    testthat
+Suggests: 
+    testthat,
+    knitr
+VignetteBuilder: knitr
