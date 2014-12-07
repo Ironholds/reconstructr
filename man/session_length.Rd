@@ -7,7 +7,7 @@ session_length(sessions, padding_value = 430L,
   preserve_single_events = FALSE, strip_last = FALSE)
 }
 \arguments{
-\item{sessions}{a list of sessions, extracted via \code{\link{sessioniser}}}
+\item{sessions}{a list of sessions, extracted via \code{\link{sessionise}}}
 
 \item{padding_value}{the time to use for padding the session length, to accomodate the time spent idling
 on the last event in the session or (in the case of one-event sessions) the only event in the session.}
@@ -26,7 +26,7 @@ a vector of session length counts, in seconds, with -1 for sessions containing a
 Counts the length of each session within a set
 }
 \details{
-\code{session_length} takes a list of sessions (generated via \code{\link{sessioniser}})
+\code{session_length} takes a list of sessions (generated via \code{\link{sessionise}})
 and calculates the approximate length (in seconds) of each session. See the "session metrics"
 vignette for more details.
 
@@ -35,11 +35,13 @@ unless \code{single_page_sessions} is set to true. Instead, it returns the numer
 for those sessions.
 }
 \examples{
+\dontrun{
 #With a sessionised dataset (see ?sessionise for an example)
-lengths <- session_lengths(sessions = sessions, padding_value = 200, preserve_single_events = TRUE)
+lengths <- session_length(sessions = sessions, padding_value = 200, preserve_single_events = TRUE)
+}
 }
 \seealso{
-\code{\link{sessioniser}}, for generating sessions, \code{\link{session_events}} for
+\code{\link{sessionise}}, for generating sessions, \code{\link{session_events}} for
 simply counting the number of events in each session, and \code{\link{bounce_rate}} for calculating
 the bounce rate of the session set overall.
 }

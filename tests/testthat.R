@@ -1,4 +1,4 @@
 library(testthat)
-library(sessionreconstruct)
+library(reconstructr)
 
-test_check("sessionreconstruct")
+test_check("reconstructr")
