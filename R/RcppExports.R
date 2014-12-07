@@ -34,7 +34,7 @@
 #'sessions <- sessionise(events_by_user)
 #'@export
 sessionise <- function(timestamps, threshold = 3600L) {
-    .Call('sessionreconstruct_sessionise', PACKAGE = 'sessionreconstruct', timestamps, threshold)
+    .Call('reconstructr_sessionise', PACKAGE = 'reconstructr', timestamps, threshold)
 }
 
 #'@title
@@ -76,11 +76,11 @@ sessionise <- function(timestamps, threshold = 3600L) {
 #'lengths <- session_lengths(sessions = sessions, padding_value = 200, preserve_single_events = TRUE)
 #'@export
 session_length <- function(sessions, padding_value = 430L, preserve_single_events = FALSE, strip_last = FALSE) {
-    .Call('sessionreconstruct_session_length', PACKAGE = 'sessionreconstruct', sessions, padding_value, preserve_single_events, strip_last)
+    .Call('reconstructr_session_length', PACKAGE = 'reconstructr', sessions, padding_value, preserve_single_events, strip_last)
 }
 
 #'@export
 session_events <- function(sessions) {
-    .Call('sessionreconstruct_session_events', PACKAGE = 'sessionreconstruct', sessions)
+    .Call('reconstructr_session_events', PACKAGE = 'reconstructr', sessions)
 }
 

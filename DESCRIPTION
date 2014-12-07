@@ -1,4 +1,4 @@
-Package: sessionreconstruct
+Package: reconstructr
 Type: Package
 Title: Session Reconstruction and Analysis
 Version: 1.0

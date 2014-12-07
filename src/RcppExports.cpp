@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // sessionise
 std::list < std::vector < int > > sessionise(std::list < std::vector < int > > timestamps, int threshold = 3600);
-RcppExport SEXP sessionreconstruct_sessionise(SEXP timestampsSEXP, SEXP thresholdSEXP) {
+RcppExport SEXP reconstructr_sessionise(SEXP timestampsSEXP, SEXP thresholdSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -23,7 +23,7 @@ END_RCPP
 }
 // session_length
 std::vector < int > session_length(std::list < std::vector < int > > sessions, int padding_value = 430, bool preserve_single_events = false, bool strip_last = false);
-RcppExport SEXP sessionreconstruct_session_length(SEXP sessionsSEXP, SEXP padding_valueSEXP, SEXP preserve_single_eventsSEXP, SEXP strip_lastSEXP) {
+RcppExport SEXP reconstructr_session_length(SEXP sessionsSEXP, SEXP padding_valueSEXP, SEXP preserve_single_eventsSEXP, SEXP strip_lastSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -41,7 +41,7 @@ END_RCPP
 }
 // session_events
 std::vector < int > session_events(std::list < std::vector < int > > sessions);
-RcppExport SEXP sessionreconstruct_session_events(SEXP sessionsSEXP) {
+RcppExport SEXP reconstructr_session_events(SEXP sessionsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
