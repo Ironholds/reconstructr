@@ -41,6 +41,43 @@ std::list < std::vector < int > > sessionise(std::list < std::vector < int > > t
    return output;
 }
 
+//'@title
+//'session_length
+//'
+//'@description
+//'Counts the length of each session within a set
+//' 
+//'@param sessions a list of sessions, extracted via \code{\link{sessioniser}}
+//'
+//'@param padding_value the time to use for padding the session length, to accomodate the time spent idling
+//'on the last event in the session or (in the case of one-event sessions) the only event in the session.
+//'
+//'@param preserve_single_events whether to attempt to calculate values for single page sessions (TRUE), or ignore
+//'them and instead return the value -1 (FALSE). Set to FALSE by default.
+//'
+//'@param strip_last whether to strip the last event in a session (TRUE) or include it and attempt
+//'to calculate the time spent on it via \code{padding_value}. Set to FALSE by default.
+//'
+//'@details
+//'\code{session_length} takes a list of sessions (generated via \code{\link{sessioniser}})
+//'and calculates the approximate length (in seconds) of each session. See the "session metrics"
+//'vignette for more details.
+//'
+//'\code{session_length} does not compute the length of sessions that consist of a single event,
+//'unless \code{single_page_sessions} is set to true. Instead, it returns the numeric value -1
+//'for those sessions.
+//'
+//'@return a vector of session length counts, in seconds, with -1 for sessions containing a single event
+//'(or not. See the \code{single_page_sessions} parameter).
+//' 
+//'@seealso
+//'\code{\link{sessioniser}}, for generating sessions, \code{\link{session_events}} for
+//'simply counting the number of events in each session, and \code{\link{bounce_rate}} for calculating
+//'the bounce rate of the session set overall.
+//'
+//'@examples
+//'#With a sessionised dataset (see ?sessionise for an example)
+//'lengths <- session_lengths(sessions = sessions, padding_value = 200, preserve_single_events = TRUE)
 //'@export
 // [[Rcpp::export]]
 std::vector < int > session_length(std::list < std::vector < int > > sessions, int padding_value = 430,
