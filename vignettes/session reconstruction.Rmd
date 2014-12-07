@@ -1,0 +1,21 @@
+#Session reconstruction with reconstructr
+<!--
+  %\VignetteIndexEntry{Session Reconstruction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+-->
+
+Within web analytics, session reconstruction is an essential prerequisite of a host of useful and commonly-requested
+metrics, including time-on-site, time-on-page, and bounce rate. What approach to session reconstruction works best
+is hotly debated, despite two decades of research in the field. This vignette described some of the most
+commonly-used approaches, the advantages and disadvantages of each, and after arguing for *heuristic reconstruction*
+as the most common and scientifically supported approach, demonstrates the proper use of <code>reconstructr</code>
+to reconstruct sessions using this methodology.
+
+## Approaches to session reconstruction
+
+## The heuristic approach in detail
+
+## Session reconstruction with reconstructr
+
+## Calculating metrics from sessionised event data
