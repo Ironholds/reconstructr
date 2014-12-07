@@ -23,7 +23,7 @@ std::vector < int > session_metrics::c_session_length(std::list < std::vector < 
   std::list < std::vector < int > >::const_iterator iterator;
   std::vector < int > output;
   std::vector < int > holding;
-  int sum_holding;
+  int sum_holding = 0;
   
   //For each list entry...
   for (iterator = sessions.begin(); iterator != sessions.end(); ++iterator) {
@@ -32,24 +32,25 @@ std::vector < int > session_metrics::c_session_length(std::list < std::vector < 
     holding = *iterator;
     int in_size = holding.size();
     
-    //If there's only one page, return -1
+    //If strip_last is true, reduce in_size
+    if(strip_last){
+      in_size -= 1;
+    }
+    
+    //If there's only one page, after this, return -1 - unless preserve_single_events is true.
     if(in_size < 2){
       
-      //Unless the user wants single-event sessions preserved, and strip_last is FALSE
-      if(preserve_single_events & !strip_last){
-        output.push_back(padding_value);
-      } else {
+      if(!preserve_single_events){
         output.push_back(-1);
+      } else {
+        output.push_back(padding_value);
       }
-
+      
+    //Otherwise...
     } else {
       
-      //If we want to strip_last, just resize in_size
-      if(strip_last){
-        in_size -= 1;
-      }
-      
-      //Work out the intertimes and add them, plus the padding value
+      //sort, work out the intertimes, and add them (plus the padding value)
+      std::sort(holding.begin(),holding.end());
       for(int i = 1; i < in_size; i++) {
         sum_holding += (holding[i] - holding[i-1]);
       }
