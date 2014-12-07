@@ -1,3 +1,5 @@
+context("session_events")
+
 test_that("session_events handles zero-event entries", {
   
   #Example set.
