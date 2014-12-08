@@ -12,9 +12,9 @@ Description: sessionreconstruct provides functions to aid in reconstructing and
     analytical functions also provided in the package should be generalisable.
 License: MIT + file LICENSE
 LinkingTo: Rcpp
-Imports: 
+Imports:
     Rcpp
-Suggests: 
+Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr

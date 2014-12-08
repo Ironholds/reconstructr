@@ -1,3 +1,6 @@
+---
+output: html_document
+---
 #Session reconstruction with reconstructr
 <!--
   %\VignetteIndexEntry{Session Reconstruction}
@@ -27,6 +30,9 @@ websites,^[see [Berendt et al. *The Impact of Site Structure and User Environmen
 
 ## The heuristic approach in detail
 So, we have two approaches. One has questions raised about its basic accuracy, while the other is difficult to generalise and of continually decreasing utility as technology changes.
+
+Research done by the package authors (and others) in 2014, however, suggests that time-based heuristics may actually not be as inaccurate as previously thought.
+
 ![test](session_clusters.png )
 
 ## Session reconstruction with reconstructr
