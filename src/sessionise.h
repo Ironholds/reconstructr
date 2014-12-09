@@ -14,7 +14,8 @@ class sessionise {
     int intertime_hold;
     std::vector < int > holding;
     
-    //Push the first timestamp on to the holding vector
+    //Sort, push the first timestamp on to the holding vector
+    std::sort(timestamps.begin(),timestamps.end());
     holding.push_back(timestamps[0]);
     
     //For each timestamp after the first one..
@@ -67,4 +68,5 @@ class sessionise {
       return(output);
     
     }
+
 };
