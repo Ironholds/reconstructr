@@ -2,12 +2,9 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #'@title
-#'sessionise
-#'
-#'@description
 #'split a series of timestamps (or a series of series) associated with UUIDs, into sessions
 #'
-#'@details
+#'@description
 #'\code{sessionise} splits timestamps associated with user events into "sessions",
 #'enabling the simple calculation of various metrics such as session length or the number of events
 #'within a session.
@@ -38,11 +35,17 @@ sessionise <- function(timestamps, threshold = 3600L) {
 }
 
 #'@title
-#'session_length
+#'Counts the length of each session within a set
 #'
 #'@description
-#'Counts the length of each session within a set
-#' 
+#'\code{session_length} takes a list of sessions (generated via \code{\link{sessionise}})
+#'and calculates the approximate length (in seconds) of each session. See the "session metrics"
+#'vignette for more details.
+#'
+#'\code{session_length} does not compute the length of sessions that consist of a single event,
+#'unless \code{single_page_sessions} is set to true. Instead, it returns the numeric value -1
+#'for those sessions.
+#'
 #'@param sessions a list of sessions, extracted via \code{\link{sessionise}}
 #'
 #'@param padding_value the time to use for padding the session length, to accomodate the time spent idling
@@ -53,15 +56,6 @@ sessionise <- function(timestamps, threshold = 3600L) {
 #'
 #'@param strip_last whether to strip the last event in a session (TRUE) or include it and attempt
 #'to calculate the time spent on it via \code{padding_value}. Set to FALSE by default.
-#'
-#'@details
-#'\code{session_length} takes a list of sessions (generated via \code{\link{sessionise}})
-#'and calculates the approximate length (in seconds) of each session. See the "session metrics"
-#'vignette for more details.
-#'
-#'\code{session_length} does not compute the length of sessions that consist of a single event,
-#'unless \code{single_page_sessions} is set to true. Instead, it returns the numeric value -1
-#'for those sessions.
 #'
 #'@return a vector of session length counts, in seconds, with -1 for sessions containing a single event
 #'(or not. See the \code{single_page_sessions} parameter).
@@ -81,10 +75,9 @@ session_length <- function(sessions, padding_value = 430L, preserve_single_event
     .Call('reconstructr_session_length', PACKAGE = 'reconstructr', sessions, padding_value, preserve_single_events, strip_last)
 }
 
-#'@title session_events
-#'@description count the number of events in a session (or set of sessions)
-#'
-#'@details \code{session_events} counts the number of events in a session, or in multiple
+#'@title count the number of events in a session (or set of sessions)
+#'@description 
+#'\code{session_events} counts the number of events in a session, or in multiple
 #'sessions, based on a provided "sessions" list (which can be generated via \code{\link{sessionise}})).
 #'
 #'@param sessions a list of sessions generated via \code{\link{sessionise}}

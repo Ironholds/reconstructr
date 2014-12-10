@@ -4,12 +4,9 @@
 using namespace Rcpp;
 
 //'@title
-//'sessionise
-//'
-//'@description
 //'split a series of timestamps (or a series of series) associated with UUIDs, into sessions
 //'
-//'@details
+//'@description
 //'\code{sessionise} splits timestamps associated with user events into "sessions",
 //'enabling the simple calculation of various metrics such as session length or the number of events
 //'within a session.
@@ -42,11 +39,17 @@ std::list < std::vector < int > > sessionise(std::list < std::vector < int > > t
 }
 
 //'@title
-//'session_length
+//'Counts the length of each session within a set
 //'
 //'@description
-//'Counts the length of each session within a set
-//' 
+//'\code{session_length} takes a list of sessions (generated via \code{\link{sessionise}})
+//'and calculates the approximate length (in seconds) of each session. See the "session metrics"
+//'vignette for more details.
+//'
+//'\code{session_length} does not compute the length of sessions that consist of a single event,
+//'unless \code{single_page_sessions} is set to true. Instead, it returns the numeric value -1
+//'for those sessions.
+//'
 //'@param sessions a list of sessions, extracted via \code{\link{sessionise}}
 //'
 //'@param padding_value the time to use for padding the session length, to accomodate the time spent idling
@@ -57,15 +60,6 @@ std::list < std::vector < int > > sessionise(std::list < std::vector < int > > t
 //'
 //'@param strip_last whether to strip the last event in a session (TRUE) or include it and attempt
 //'to calculate the time spent on it via \code{padding_value}. Set to FALSE by default.
-//'
-//'@details
-//'\code{session_length} takes a list of sessions (generated via \code{\link{sessionise}})
-//'and calculates the approximate length (in seconds) of each session. See the "session metrics"
-//'vignette for more details.
-//'
-//'\code{session_length} does not compute the length of sessions that consist of a single event,
-//'unless \code{single_page_sessions} is set to true. Instead, it returns the numeric value -1
-//'for those sessions.
 //'
 //'@return a vector of session length counts, in seconds, with -1 for sessions containing a single event
 //'(or not. See the \code{single_page_sessions} parameter).
@@ -88,10 +82,9 @@ std::vector < int > session_length(std::list < std::vector < int > > sessions, i
   return output;
 }
 
-//'@title session_events
-//'@description count the number of events in a session (or set of sessions)
-//'
-//'@details \code{session_events} counts the number of events in a session, or in multiple
+//'@title count the number of events in a session (or set of sessions)
+//'@description 
+//'\code{session_events} counts the number of events in a session, or in multiple
 //'sessions, based on a provided "sessions" list (which can be generated via \code{\link{sessionise}})).
 //'
 //'@param sessions a list of sessions generated via \code{\link{sessionise}}
