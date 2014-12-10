@@ -3,6 +3,7 @@
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 -->
+##Introduction to reconstructr
 
 Within web analytics, session reconstruction is an essential prerequisite of a host of useful and commonly-requested metrics, including time-on-site, time-on-page, and bounce rate. With reconstructr, we can conveniently divide
 user data into sessions and calculate a host of metrics from the resulting dataset.
