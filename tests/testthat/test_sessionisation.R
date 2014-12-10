@@ -38,7 +38,9 @@ test_that("sessionisation handles thresholds", {
   
   #Test resulting value
   expect_that(length(results), equals(3))
-  expect_that(length(results[[1]]), equals(3))
-  expect_that(length(results[[2]]), equals(2))
+  expect_that(length(results[[1]]), equals(4))
+  expect_that(length(results[[2]]), equals(1))
+  expect_that(length(results[[3]]), equals(1))
+  
   
 })

@@ -2,6 +2,7 @@
 
 export(bounce_rate)
 export(event_time)
+export(padding_value)
 export(session_events)
 export(session_length)
 export(sessionise)
