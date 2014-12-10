@@ -89,7 +89,7 @@ std::vector < int > session_length(std::list < std::vector < int > > sessions, i
 }
 
 //'@title session_events
-//'@description count the number of pages in a session (or set of sessions)
+//'@description count the number of events in a session (or set of sessions)
 //'
 //'@details \code{session_events} counts the number of events in a session, or in multiple
 //'sessions, based on a provided "sessions" list (which can be generated via \code{\link{sessionise}})).
@@ -109,5 +109,12 @@ std::vector < int > session_length(std::list < std::vector < int > > sessions, i
 // [[Rcpp::export]]
 std::vector < int > session_events(std::list < std::vector < int > > sessions){
   std::vector < int > output = session_metrics::c_session_events(sessions);
+  return output;
+}
+
+//Time per event.
+// [[Rcpp::export]]
+std::list < std::vector < int > > c_time_per_event(std::list < std::vector < int > > sessions){
+  std::list < std::vector < int > > output = session_metrics::c_time_event(sessions);
   return output;
 }

@@ -54,3 +54,18 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// c_time_per_event
+std::list < std::vector < int > > c_time_per_event(std::list < std::vector < int > > sessions);
+RcppExport SEXP reconstructr_c_time_per_event(SEXP sessionsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< std::list < std::vector < int > > >::type sessions(sessionsSEXP );
+        std::list < std::vector < int > > __result = c_time_per_event(sessions);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}

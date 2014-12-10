@@ -9,7 +9,7 @@ session_events(sessions)
 \item{sessions}{a list of sessions generated via \code{\link{sessionise}}}
 }
 \description{
-count the number of pages in a session (or set of sessions)
+count the number of events in a session (or set of sessions)
 }
 \details{
 \code{session_events} counts the number of events in a session, or in multiple

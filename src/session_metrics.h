@@ -2,8 +2,34 @@
 using namespace Rcpp;
 
 class session_metrics{
-
+  
+  private:
+    static std::vector < int > time_event_single(std::vector < int > session){
+      
+      //Declare output object
+      std::vector < int > output;
+      int in_size = session.size();
+      
+      //If there's only one entry, report as such - otherwise, sort, calculate each intertime and add
+      //on to a vector.
+      if(in_size < 2){
+        output.push_back(-1);
+      } else {
+        std::sort(session.begin(),session.end());
+        for(int i = 1; i < in_size; i++) {
+          output.push_back(session[i] - session[i-1]);
+        }
+      }
+      
+      //Return
+      return output;
+      
+    }
+    
   public:
+    
+    //Calculate the time on each event
+    static std::list < std::vector < int > > c_time_event(std::list < std::vector < int > > sessions);
     
     //Calculate the length of a session
     static std::vector < int > c_session_length(std::list < std::vector < int > > sessions, int padding_value,
@@ -14,6 +40,24 @@ class session_metrics{
     
 };
 
+//Calculate the time on each event
+std::list < std::vector < int > > session_metrics::c_time_event(std::list < std::vector < int > > sessions){
+  
+  //Declare output object, holding objects, iterator.
+  std::list < std::vector < int > >::const_iterator iterator;
+  std::list < std::vector < int > > output;
+  std::vector < int > holding;
+  
+  //For each list entry, extract, identify intertimes and add
+  for(iterator = sessions.begin(); iterator != sessions.end(); ++iterator) {
+    holding = *iterator;
+    output.push_back(session_metrics::time_event_single(holding));
+  }
+  
+  //Return
+  return output;
+}
+    
 //Calculate the length of a session
 std::vector < int > session_metrics::c_session_length(std::list < std::vector < int > > sessions,
                                                       int padding_value, bool preserve_single_events,

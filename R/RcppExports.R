@@ -82,7 +82,7 @@ session_length <- function(sessions, padding_value = 430L, preserve_single_event
 }
 
 #'@title session_events
-#'@description count the number of pages in a session (or set of sessions)
+#'@description count the number of events in a session (or set of sessions)
 #'
 #'@details \code{session_events} counts the number of events in a session, or in multiple
 #'sessions, based on a provided "sessions" list (which can be generated via \code{\link{sessionise}})).
@@ -101,5 +101,9 @@ session_length <- function(sessions, padding_value = 430L, preserve_single_event
 #'@export
 session_events <- function(sessions) {
     .Call('reconstructr_session_events', PACKAGE = 'reconstructr', sessions)
+}
+
+c_time_per_event <- function(sessions) {
+    .Call('reconstructr_c_time_per_event', PACKAGE = 'reconstructr', sessions)
 }
 
