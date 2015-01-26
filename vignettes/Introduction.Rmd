@@ -15,7 +15,7 @@ The nature of a "session" has provided fodder for researchers for years. Most pe
 inactivity timeouts; if someone does not take an action in N seconds, their session has ended and
 a new one begins on their next registered action.
 
-Using reconstructr, we can conveniently divide events into sessions with the <code>sessionise</code> function. This takes a list of numeric vectors - each one containing the value, in seconds, of each event associated
+Using reconstructr, we can conveniently divide events into sessions with the <code>reconstruct_sessions</code> function. This takes a list of numeric vectors - each one containing the value, in seconds, of each event associated
 with a particular user - and divides them into sessions, splitting whenever the time between events is
 greater than <code>threshold</code> Timestamps can be converted to their representation in seconds with the <code>to_seconds</code> function.
 
@@ -23,7 +23,7 @@ greater than <code>threshold</code> Timestamps can be converted to their represe
 library(reconstructr)
 actions_by_user <- list(c(1417330230, 1417330250, 1417330295, 1417330324, 1417330416),
                         c(1417401697, 1417401741, 1417401751, 1417403263))
-sessions <- sessionise(timestamps = actions_by_user, threshold = 1800)
+sessions <- reconstruct_sessions(timestamps = actions_by_user, threshold = 1800)
 ```
 
 The appropriate value for N - which sessionise represents with the "threshold" argument - has been hotly debated for years, with most systems historically settling on a 30 minute (1800 second) approach. The default for reconstructr is an hour, or 3600 seconds, in line with recent research by  [Halfaker et al.](http://arxiv.org/abs/1411.2878) on the commonality of that threshold to a variety of websites and systems. Really, though, you can set it to whatever value is most appropriate to you: Halfaker et al also demonstrate a good way of working out the appropriate threshold.

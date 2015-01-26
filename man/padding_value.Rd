@@ -7,7 +7,7 @@
 padding_value(sessions, method, fun, ...)
 }
 \arguments{
-\item{sessions}{a list of sessions, generated with \code{\link{sessionise}}}
+\item{sessions}{a list of sessions, generated with \code{\link{reconstruct_sessions}}}
 
 \item{method}{the method to use to generate the value. Options are "geometric mean",
 "arithmetic mean", "median" or "other" (see below).}
@@ -29,7 +29,7 @@ the dataset.
 data("session_dataset")
 session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
 events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
-sessions <- sessionise(events_by_user)
+sessions <- reconstruct_sessions(events_by_user)
 padding_val <- padding_value(sessions, "geometric mean")
 padding_val
 #41.07547

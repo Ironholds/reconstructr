@@ -3,7 +3,7 @@
 #'their numeric value (represented in seconds).
 #'
 #'@details \code{to_seconds} is designed to enable the rapid conversion of timestamps into their representation
-#'as seconds, enabling them to be consumed by \code{\link{sessionise}}.
+#'as seconds, enabling them to be consumed by \code{\link{reconstruct_sessions}}.
 #'
 #'@param x a vector of POSIXlt/POSIXct timestamps, or character strings representing a different timestamp
 #'format.
@@ -13,7 +13,7 @@
 #'
 #'@return a vector of second-values, one for each timestamp.
 #'
-#'@seealso \code{\link{sessionise}} for making use of the new values.
+#'@seealso \code{\link{reconstruct_sessions}} for making use of the new values.
 #'
 #'@examples
 #'#Converting non-POSIX timestamps to seconds

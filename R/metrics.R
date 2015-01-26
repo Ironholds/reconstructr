@@ -2,7 +2,7 @@
 #'@description calculates the "bounce rate" within a set of sessions - the proportion of sessions
 #'consisting only of a single event.
 #'
-#'@param sessions a list of sessions, generated with \code{\link{sessionise}}
+#'@param sessions a list of sessions, generated with \code{\link{reconstruct_sessions}}
 #'
 #'@param decimal_places the number of decimal places to round the output to - set to 2 by default.
 #'
@@ -19,7 +19,7 @@
 #'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
 #'
 #'#Sessionise and calculate bounce rate
-#'sessions <- sessionise(events_by_user)
+#'sessions <- reconstruct_sessions(events_by_user)
 #'bounce_rate(sessions)
 #'#[1]58
 #'@export
@@ -36,7 +36,7 @@ bounce_rate <- function(sessions, decimal_places = 2){
 #'the output format and optionally run analytical functions against
 #'the results before they are returned
 #'
-#'@param sessions a list of sessions, generated with \code{\link{sessionise}}
+#'@param sessions a list of sessions, generated with \code{\link{reconstruct_sessions}}
 #'
 #'@param as_vector whether to unlist the results and return them as a vector,
 #'or return them as a list. Set to TRUE (vector) by default. In the event that you
@@ -58,7 +58,7 @@ bounce_rate <- function(sessions, decimal_places = 2){
 #'data("session_dataset")
 #'session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
 #'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
-#'sessions <- sessionise(events_by_user)
+#'sessions <- reconstruct_sessions(events_by_user)
 #'
 #'#Extract the time between events, separating out the results for each session
 #'list_event_time <- event_time(sessions, as_vector = FALSE)

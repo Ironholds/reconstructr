@@ -7,7 +7,7 @@
 event_time(sessions, as_vector = TRUE, fun, ...)
 }
 \arguments{
-\item{sessions}{a list of sessions, generated with \code{\link{sessionise}}}
+\item{sessions}{a list of sessions, generated with \code{\link{reconstruct_sessions}}}
 
 \item{as_vector}{whether to unlist the results and return them as a vector,
 or return them as a list. Set to TRUE (vector) by default. In the event that you
@@ -35,7 +35,7 @@ the results before they are returned
 data("session_dataset")
 session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
 events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
-sessions <- sessionise(events_by_user)
+sessions <- reconstruct_sessions(events_by_user)
 
 #Extract the time between events, separating out the results for each session
 list_event_time <- event_time(sessions, as_vector = FALSE)

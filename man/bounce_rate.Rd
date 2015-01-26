@@ -7,7 +7,7 @@
 bounce_rate(sessions, decimal_places = 2)
 }
 \arguments{
-\item{sessions}{a list of sessions, generated with \code{\link{sessionise}}}
+\item{sessions}{a list of sessions, generated with \code{\link{reconstruct_sessions}}}
 
 \item{decimal_places}{the number of decimal places to round the output to - set to 2 by default.}
 }
@@ -26,7 +26,7 @@ session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = 
 events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
 
 #Sessionise and calculate bounce rate
-sessions <- sessionise(events_by_user)
+sessions <- reconstruct_sessions(events_by_user)
 bounce_rate(sessions)
 #[1]58
 }

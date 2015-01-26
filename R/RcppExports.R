@@ -38,7 +38,7 @@ reconstruct_sessions <- function(timestamps, threshold = 3600L) {
 #'Counts the length of each session within a set
 #'
 #'@description
-#'\code{session_length} takes a list of sessions (generated via \code{\link{sessionise}})
+#'\code{session_length} takes a list of sessions (generated via \code{\link{reconstruct_sessions}})
 #'and calculates the approximate length (in seconds) of each session. See the "session metrics"
 #'vignette for more details.
 #'
@@ -46,7 +46,7 @@ reconstruct_sessions <- function(timestamps, threshold = 3600L) {
 #'unless \code{single_page_sessions} is set to true. Instead, it returns the numeric value -1
 #'for those sessions.
 #'
-#'@param sessions a list of sessions, extracted via \code{\link{sessionise}}
+#'@param sessions a list of sessions, extracted via \code{\link{reconstruct_sessions}}
 #'
 #'@param padding_value the time to use for padding the session length, to accomodate the time spent idling
 #'on the last event in the session or (in the case of one-event sessions) the only event in the session.

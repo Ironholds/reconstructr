@@ -3,7 +3,7 @@ A package for session reconstruction and analysis in R.
 
 __Author:__ Oliver Keyes<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
-__Status:__ In development
+__Status:__ Stable
 
 ###Description
 
@@ -27,9 +27,16 @@ for new features, please feel free to [report them](https://github.com/Ironholds
 
 ###Installation
 
+For the current release version:
+
+    library(devtools)
+    install_github("ironholds/reconstructr", ref = "1.0.0")
+
+For the development version:
+
     library(devtools)
     install_github("ironholds/reconstructr")
-
+    
 ###Dependencies
 * R. Doy.
 * [Rcpp](http://cran.rstudio.com/web/packages/Rcpp/)

@@ -8,7 +8,7 @@ session_length(sessions, padding_value = 430L,
   preserve_single_events = FALSE, strip_last = FALSE)
 }
 \arguments{
-\item{sessions}{a list of sessions, extracted via \code{\link{sessionise}}}
+\item{sessions}{a list of sessions, extracted via \code{\link{reconstruct_sessions}}}
 
 \item{padding_value}{the time to use for padding the session length, to accomodate the time spent idling
 on the last event in the session or (in the case of one-event sessions) the only event in the session.}
@@ -24,7 +24,7 @@ a vector of session length counts, in seconds, with -1 for sessions containing a
 (or not. See the \code{single_page_sessions} parameter).
 }
 \description{
-\code{session_length} takes a list of sessions (generated via \code{\link{sessionise}})
+\code{session_length} takes a list of sessions (generated via \code{\link{reconstruct_sessions}})
 and calculates the approximate length (in seconds) of each session. See the "session metrics"
 vignette for more details.
 

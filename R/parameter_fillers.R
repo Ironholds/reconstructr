@@ -4,7 +4,7 @@
 #'It does this by applying a statistical function to the range of inter-event values within
 #'the dataset.
 #'
-#'@param sessions a list of sessions, generated with \code{\link{sessionise}}
+#'@param sessions a list of sessions, generated with \code{\link{reconstruct_sessions}}
 #'
 #'@param method the method to use to generate the value. Options are "geometric mean",
 #'"arithmetic mean", "median" or "other" (see below).
@@ -21,7 +21,7 @@
 #'data("session_dataset")
 #'session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
 #'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
-#'sessions <- sessionise(events_by_user)
+#'sessions <- reconstruct_sessions(events_by_user)
 #'padding_val <- padding_value(sessions, "geometric mean")
 #'padding_val
 #'#41.07547
