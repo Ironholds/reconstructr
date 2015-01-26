@@ -5,12 +5,11 @@ Version: 0.5
 Date: 2014-12-06
 Author: Oliver Keyes
 Maintainer: Oliver Keyes <ironholds@gmail.com>
-Description: This library provides functions to aid in reconstructing sessions
+Description: Functions to aid in reconstructing sessions
     and efficiently calculating an array of metrics from the resulting data,
     including bounce rate, time-on-page, and session length. Although primarily
     designed for web data and analytics, its approach is plausibly applicable
-    to other domains, and the analytical functions provides in the package
-    should be generalisable.
+    to other domains.
 License: MIT + file LICENSE
 LinkingTo: Rcpp
 Imports:

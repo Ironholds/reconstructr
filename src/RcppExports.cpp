@@ -5,16 +5,16 @@
 
 using namespace Rcpp;
 
-// sessionise
-std::list < std::vector < int > > sessionise(std::list < std::vector < int > > timestamps, int threshold = 3600);
-RcppExport SEXP reconstructr_sessionise(SEXP timestampsSEXP, SEXP thresholdSEXP) {
+// reconstruct_sessions
+std::list < std::vector < int > > reconstruct_sessions(std::list < std::vector < int > > timestamps, int threshold = 3600);
+RcppExport SEXP reconstructr_reconstruct_sessions(SEXP timestampsSEXP, SEXP thresholdSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< std::list < std::vector < int > > >::type timestamps(timestampsSEXP );
         Rcpp::traits::input_parameter< int >::type threshold(thresholdSEXP );
-        std::list < std::vector < int > > __result = sessionise(timestamps, threshold);
+        std::list < std::vector < int > > __result = reconstruct_sessions(timestamps, threshold);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

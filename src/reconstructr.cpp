@@ -7,7 +7,7 @@ using namespace Rcpp;
 //'split a series of timestamps (or a series of series) associated with UUIDs, into sessions
 //'
 //'@description
-//'\code{sessionise} splits timestamps associated with user events into "sessions",
+//'\code{reconstruct_sessions} splits timestamps associated with user events into "sessions",
 //'enabling the simple calculation of various metrics such as session length or the number of events
 //'within a session.
 //'
@@ -30,12 +30,13 @@ using namespace Rcpp;
 //'data("session_dataset")
 //'session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
 //'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
-//'sessions <- sessionise(events_by_user)
+//'sessions <- reconstruct_sessions(events_by_user)
 //'@export
 // [[Rcpp::export]]
-std::list < std::vector < int > > sessionise(std::list < std::vector < int > > timestamps, int threshold = 3600) {
-   std::list < std::vector < int > > output = sessionise::c_sessionise(timestamps, threshold);
-   return output;
+std::list < std::vector < int > > reconstruct_sessions(std::list < std::vector < int > > timestamps, int threshold = 3600) {
+  sessionise sess_inst;
+  std::list < std::vector < int > > output = sess_inst.reconstruct_sessions(timestamps, threshold);
+  return output;
 }
 
 //'@title
@@ -65,13 +66,13 @@ std::list < std::vector < int > > sessionise(std::list < std::vector < int > > t
 //'(or not. See the \code{single_page_sessions} parameter).
 //' 
 //'@seealso
-//'\code{\link{sessionise}}, for generating sessions, \code{\link{session_events}} for
+//'\code{\link{reconstruct_sessions}}, for generating sessions, \code{\link{session_events}} for
 //'simply counting the number of events in each session, and \code{\link{bounce_rate}} for calculating
 //'the bounce rate of the session set overall.
 //'
 //'@examples
 //'\dontrun{
-//'#With a sessionised dataset (see ?sessionise for an example)
+//'#With a sessionised dataset (see ?reconstruct_sessions for an example)
 //'lengths <- session_length(sessions = sessions, padding_value = 200, preserve_single_events = TRUE)
 //'}
 //'@export
@@ -85,17 +86,17 @@ std::vector < int > session_length(std::list < std::vector < int > > sessions, i
 //'@title count the number of events in a session (or set of sessions)
 //'@description 
 //'\code{session_events} counts the number of events in a session, or in multiple
-//'sessions, based on a provided "sessions" list (which can be generated via \code{\link{sessionise}})).
+//'sessions, based on a provided "sessions" list (which can be generated via \code{\link{reconstruct_sessions}})).
 //'
-//'@param sessions a list of sessions generated via \code{\link{sessionise}}
+//'@param sessions a list of sessions generated via \code{\link{reconstruct_sessions}}
 //'
-//'@seealso \code{\link{sessionise}} for generating sessions, \code{\link{session_length}}
+//'@seealso \code{\link{reconstruct_sessions}} for generating sessions, \code{\link{session_length}}
 //'for session length, and \code{\link{bounce_rate}} for the bounce rate represented by a set
 //'of sessions.
 //'
 //'@examples
 //'\dontrun{
-//'#With a sessionised dataset (see ?sessionise for an example)
+//'#With a sessionised dataset (see ?reconstruct_sessions for an example)
 //'event_counts <- session_events(sessions)
 //'}
 //'@export

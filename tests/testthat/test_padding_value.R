@@ -4,7 +4,7 @@ test_that("padding_value can deal with all the possible inputs", {
   data("session_dataset")
   session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
   events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
-  sessions <- sessionise(events_by_user)
+  sessions <- reconstruct_sessions(events_by_user)
   
   expect_that(padding_value(sessions, "geometric mean"), equals(41.07547))
   expect_that(padding_value(sessions, "other", function(x,y){return(sum(x)+y)}, y = 19), equals(9656260))
