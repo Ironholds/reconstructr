@@ -1,6 +1,9 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+#ifndef __SESSIONISE_INCLUDED__
+#define __SESSIONISE_INCLUDED__
+
 /**
  * A class of functions for session generation, through
  * tokenizing event streams into sessions.
@@ -40,3 +43,5 @@ class sessionise {
      */
     std::list < std::vector < int > > reconstruct_sessions(std::list < std::vector < int > > timestamps, int threshold);
 };
+
+#endif
