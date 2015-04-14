@@ -47,7 +47,9 @@ std::list < std::vector < int > > sessionise::reconstruct_sessions(std::list < s
     holding = single_sessionise(*iterator, threshold);
     output.splice(output.end(), holding);
     holding.clear();
+    Rcpp::checkUserInterrupt();
   }
+
   return output;
 
 }

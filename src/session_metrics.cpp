@@ -35,6 +35,7 @@ std::list < std::vector < int > > session_metrics::c_time_event(std::list < std:
   for(iterator = sessions.begin(); iterator != sessions.end(); ++iterator) {
     holding = *iterator;
     output.push_back(session_metrics::time_event_single(holding));
+    Rcpp::checkUserInterrupt();
   }
   
   //Return
@@ -84,7 +85,7 @@ std::vector < int > session_metrics::c_session_length(std::list < std::vector < 
       sum_holding += padding_value;
       output.push_back(sum_holding);
       sum_holding = 0;
-
+      Rcpp::checkUserInterrupt();
     }
   }
   
@@ -100,9 +101,9 @@ std::vector < int > session_metrics::c_session_events(std::list < std::vector < 
   std::list < std::vector < int > >::const_iterator iterator;
   
   for (iterator = sessions.begin(); iterator != sessions.end(); ++iterator) {
-    
     holding = *iterator;
     output.push_back(holding.size());
+    Rcpp::checkUserInterrupt();
   }
   
   return output;
