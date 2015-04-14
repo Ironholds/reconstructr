@@ -79,7 +79,8 @@ std::list < std::vector < int > > reconstruct_sessions(std::list < std::vector <
 // [[Rcpp::export]]
 std::vector < int > session_length(std::list < std::vector < int > > sessions, int padding_value = 430,
                                    bool preserve_single_events = false, bool strip_last = false){
-  std::vector < int > output = session_metrics::c_session_length(sessions, padding_value, preserve_single_events, strip_last);
+  session_metrics metrics_inst;
+  std::vector < int > output = metrics_inst.c_session_length(sessions, padding_value, preserve_single_events, strip_last);
   return output;
 }
 
@@ -102,13 +103,15 @@ std::vector < int > session_length(std::list < std::vector < int > > sessions, i
 //'@export
 // [[Rcpp::export]]
 std::vector < int > session_events(std::list < std::vector < int > > sessions){
-  std::vector < int > output = session_metrics::c_session_events(sessions);
+  session_metrics metrics_inst;
+  std::vector < int > output = metrics_inst.c_session_events(sessions);
   return output;
 }
 
 //Time per event.
 // [[Rcpp::export]]
 std::list < std::vector < int > > c_time_per_event(std::list < std::vector < int > > sessions){
-  std::list < std::vector < int > > output = session_metrics::c_time_event(sessions);
+  session_metrics metrics_inst;
+  std::list < std::vector < int > > output = metrics_inst.c_time_event(sessions);
   return output;
 }

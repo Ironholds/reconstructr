@@ -24,7 +24,7 @@ class session_metrics {
      * @return a vector of integers, sized [input-1], containing
      * the inter-time values.
      */
-    static std::vector < int > time_event_single(std::vector < int > session);
+   std::vector < int > time_event_single(std::vector < int > session);
     
   public:
     
@@ -40,7 +40,7 @@ class session_metrics {
      * @return a list of vectors of integers, each vector consisting of
      * the inter-time values for that session.
      */
-    static std::list < std::vector < int > > c_time_event(std::list < std::vector < int > > sessions);
+   std::list < std::vector < int > > c_time_event(std::list < std::vector < int > > sessions);
     
     /**
      * Calculates the length of each session within a series.
@@ -61,7 +61,7 @@ class session_metrics {
      * @return a vector of integers, representing the length of each
      * input session.
      */
-    static std::vector < int > c_session_length(std::list < std::vector < int > > sessions, int padding_value,
+   std::vector < int > c_session_length(std::list < std::vector < int > > sessions, int padding_value,
                                                 bool preserve_single_events, bool strip_last);
                                                 
     /**
@@ -73,7 +73,7 @@ class session_metrics {
      * @return a vector of integers, representing the number of events
      * within each input session.
      */
-    static std::vector < int > c_session_events(std::list < std::vector < int > > sessions);
+   std::vector < int > c_session_events(std::list < std::vector < int > > sessions);
     
 };
 
