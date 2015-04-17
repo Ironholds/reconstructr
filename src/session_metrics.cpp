@@ -24,7 +24,7 @@ std::vector < int > session_metrics::time_event_single(std::vector < int > sessi
 
 
 //Calculate the time on each event
-std::list < std::vector < int > > session_metrics::c_time_event(std::list < std::vector < int > > sessions){
+std::list < std::vector < int > > session_metrics::time_event_(std::list < std::vector < int > > sessions){
   
   //Declare output object, holding objects, iterator.
   std::list < std::vector < int > >::const_iterator iterator;
@@ -43,9 +43,9 @@ std::list < std::vector < int > > session_metrics::c_time_event(std::list < std:
 }
     
 //Calculate the length of a session
-std::vector < int > session_metrics::c_session_length(std::list < std::vector < int > > sessions,
-                                                      int padding_value, bool preserve_single_events,
-                                                      bool strip_last){
+std::vector < int > session_metrics::session_length_(std::list < std::vector < int > > sessions,
+                                                     int padding_value, bool preserve_single_events,
+                                                     bool strip_last){
   
   //Declare output object, holding objects, iterator.
   std::list < std::vector < int > >::const_iterator iterator;
@@ -93,7 +93,7 @@ std::vector < int > session_metrics::c_session_length(std::list < std::vector < 
 }
 
 //Count the number of events in each session
-std::vector < int > session_metrics::c_session_events(std::list < std::vector < int > > sessions) {
+std::vector < int > session_metrics::session_events_(std::list < std::vector < int > > sessions) {
   
   //Holding and output objects
   std::vector < int > output;
