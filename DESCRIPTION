@@ -1,8 +1,8 @@
 Package: reconstructr
 Type: Package
 Title: Session Reconstruction and Analysis
-Version: 1.0.0
-Date: 2014-12-06
+Version: 1.1.0
+Date: 2015-04-29
 Author: Oliver Keyes
 Maintainer: Oliver Keyes <ironholds@gmail.com>
 Description: Functions to aid in reconstructing sessions

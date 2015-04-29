@@ -5,6 +5,8 @@ __Author:__ Oliver Keyes<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
 __Status:__ Stable
 
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/reconstructr)
+
 ###Description
 
 A well-studied part of web analytics and human-computer interaction is
