@@ -1,7 +1,7 @@
 Version 1.1.0
 -------------------------------------------------------------------------
 
-*C++ de-static'd;
-*Royxgen2 upgrade;
-*checkUserInterrupt() calls added;
-*Assertion-checking added to build process.
+DEVELOPMENT
+* C++ de-static'd;
+* Royxgen2 upgrade;
+* checkUserInterrupt() calls added.
