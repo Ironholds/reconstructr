@@ -18,3 +18,5 @@ Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr
+URL: https://github.com/Ironholds/reconstructr
+BugReports: https://github.com/Ironholds/reconstructr/issues

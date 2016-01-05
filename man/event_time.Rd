@@ -28,7 +28,7 @@ of a session, \code{event_time} extracts the length of time between each event
 (which can be used for purposes such as counting the likely time-on-page, in the
 context of web analytics). It allows you to customise
 the output format and optionally run analytical functions against
-the results before they are returned
+the results before they are returned.
 }
 \examples{
 #Load, convert timestamps to seconds, split

@@ -34,7 +34,7 @@ bounce_rate <- function(sessions, decimal_places = 2){
 #'(which can be used for purposes such as counting the likely time-on-page, in the
 #'context of web analytics). It allows you to customise
 #'the output format and optionally run analytical functions against
-#'the results before they are returned
+#'the results before they are returned.
 #'
 #'@param sessions a list of sessions, generated with \code{\link{reconstruct_sessions}}
 #'
@@ -67,6 +67,8 @@ bounce_rate <- function(sessions, decimal_places = 2){
 #'mean_event_time <- event_time(sessions, as.vector = TRUE, fun = mean, trim = 0.5)
 #'
 #'@export
+#'
+#'@rdname event_time
 event_time <- function(sessions, as_vector = TRUE, fun, ...){
   
   #Grab intertimes
