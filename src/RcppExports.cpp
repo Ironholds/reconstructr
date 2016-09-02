@@ -53,3 +53,16 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// sessionise_
+List sessionise_(List split_timestamps, int threshold, int out_nrow);
+RcppExport SEXP reconstructr_sessionise_(SEXP split_timestampsSEXP, SEXP thresholdSEXP, SEXP out_nrowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type split_timestamps(split_timestampsSEXP);
+    Rcpp::traits::input_parameter< int >::type threshold(thresholdSEXP);
+    Rcpp::traits::input_parameter< int >::type out_nrow(out_nrowSEXP);
+    __result = Rcpp::wrap(sessionise_(split_timestamps, threshold, out_nrow));
+    return __result;
+END_RCPP
+}

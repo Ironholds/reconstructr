@@ -13,7 +13,8 @@ Description: Functions to aid in reconstructing sessions
 License: MIT + file LICENSE
 LinkingTo: Rcpp
 Imports:
-    Rcpp
+    Rcpp,
+    openssl
 Suggests:
     testthat,
     knitr

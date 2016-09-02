@@ -100,3 +100,7 @@ c_time_per_event <- function(sessions) {
     .Call('reconstructr_c_time_per_event', PACKAGE = 'reconstructr', sessions)
 }
 
+sessionise_ <- function(split_timestamps, threshold, out_nrow) {
+    .Call('reconstructr_sessionise_', PACKAGE = 'reconstructr', split_timestamps, threshold, out_nrow)
+}
+
