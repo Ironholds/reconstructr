@@ -41,5 +41,5 @@ For the development version:
     
 ###Dependencies
 * R. Doy.
-* [Rcpp](http://cran.rstudio.com/web/packages/Rcpp/)
+* [Rcpp](https://cran.r-project.org/package=Rcpp)
 

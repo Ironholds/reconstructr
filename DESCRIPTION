@@ -1,8 +1,8 @@
 Package: reconstructr
 Type: Package
 Title: Session Reconstruction and Analysis
-Version: 1.1.0
-Date: 2015-05-31
+Version: 1.1.1
+Date: 2016-08-31
 Author: Oliver Keyes
 Maintainer: Oliver Keyes <ironholds@gmail.com>
 Description: Functions to aid in reconstructing sessions
@@ -20,3 +20,5 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/Ironholds/reconstructr
 BugReports: https://github.com/Ironholds/reconstructr/issues
+RoxygenNote: 5.0.1
+Depends: R (>= 2.10)

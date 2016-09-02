@@ -26,6 +26,7 @@
 #'padding_val
 #'#41.07547
 #'
+#'@importFrom stats median
 #'@export
 padding_value <- function(sessions, method, fun, ...){
   
