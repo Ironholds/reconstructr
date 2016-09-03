@@ -24,16 +24,15 @@ with each function, allowing you to heavily customise what data is produced and
 what data is evaluated. For more information, see the
 [introductory vignette](https://github.com/Ironholds/reconstructr/blob/master/vignettes/Introduction.Rmd).
 
-reconstructr is under active development: if you find bugs or have suggestions
+The package  is under active development: if you find bugs or have suggestions
 for new features, please feel free to [report them](https://github.com/Ironholds/reconstructr/issues).
 
-###Installation
+### Installation
 
 For the current release version:
 
-    library(devtools)
-    install_github("ironholds/reconstructr", ref = "1.0.0")
-
+    install.packages("reconstructr")
+    
 For the development version:
 
     library(devtools)
