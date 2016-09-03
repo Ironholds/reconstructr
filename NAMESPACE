@@ -2,6 +2,7 @@
 
 export(bounce_rate)
 export(padding_value)
+export(time_on_page)
 importFrom(Rcpp,evalCpp)
 importFrom(openssl,md5)
 importFrom(stats,median)

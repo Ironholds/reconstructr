@@ -4,13 +4,13 @@
 \alias{bounce_rate}
 \title{calculate the bounce rate within a session dataset}
 \usage{
-bounce_rate(sessions, decimal_places = 2, user_id = NULL)
+bounce_rate(sessions, precision = 2, user_id = NULL)
 }
 \arguments{
 \item{sessions}{a sessions dataset, presumably generated with
 \code{\link{sessionise}}.}
 
-\item{decimal_places}{the number of decimal places to round the output to
+\item{precision}{the number of decimal places to round the output to
 - set to 2 by default.}
 
 \item{user_id}{a column that contains unique user IDs. NULL by default; if set, the assumption
@@ -35,9 +35,11 @@ rate <- bounce_rate(sessions)
 
 # Calculate bounce rate on a per-user basis
 per_user <- bounce_rate(sessions, user_id = uuid)
+
 }
 \seealso{
-\code{\link{session_events}} for generaliseable event-level calculations, and
-\code{link{event_time}} for performing operations on the time between events.
+\code{\link{sessionise}} for session reconstruction, and
+\code{\link{session_length}}, \code{\link{session_count}} and
+\code{\link{time_on_page}} for other session-related metrics.
 }
 
