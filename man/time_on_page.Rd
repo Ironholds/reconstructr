@@ -16,7 +16,7 @@ or on a per-session basis (TRUE). FALSE by default.}
 \item{median}{whether to generate the median (TRUE) or mean (FALSE)
 time-on-page. FALSE by default.}
 
-\item{decimal_places}{the number of decimal places to round the output to
+\item{precision}{the number of decimal places to round the output to
 - set to 2 by default.}
 }
 \value{

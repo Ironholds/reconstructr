@@ -4,17 +4,17 @@
 \alias{bounce_rate}
 \title{calculate the bounce rate within a session dataset}
 \usage{
-bounce_rate(sessions, precision = 2, user_id = NULL)
+bounce_rate(sessions, user_id = NULL, precision = 2)
 }
 \arguments{
 \item{sessions}{a sessions dataset, presumably generated with
 \code{\link{sessionise}}.}
 
-\item{precision}{the number of decimal places to round the output to
-- set to 2 by default.}
-
 \item{user_id}{a column that contains unique user IDs. NULL by default; if set, the assumption
 will be that you want \emph{per-user} bounce rates.}
+
+\item{precision}{the number of decimal places to round the output to
+- set to 2 by default.}
 }
 \value{
 either a single numeric value, representing the percentage of sessions

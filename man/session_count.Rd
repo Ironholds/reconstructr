@@ -2,10 +2,7 @@
 % Please edit documentation in R/metrics.R
 \name{session_count}
 \alias{session_count}
-\title{Count the number of sessions in a sessionised dataset
-\code{link{session_count}} counts the number of sessions in a sessionised
-dataset, producing either a count for the overall dataset or on a per-user
-basis (see below).}
+\title{Count the number of sessions in a sessionised dataset}
 \usage{
 session_count(sessions, user_id = NULL)
 }
@@ -21,6 +18,11 @@ count for each user ID will be returned.}
 \value{
 either a single integer value or a data.frame (see above).
 }
+\description{
+\code{link{session_count}} counts the number of sessions in a sessionised
+dataset, producing either a count for the overall dataset or on a per-user
+basis (see below).
+}
 \examples{
 #Load and sessionise the dataset
 data("session_dataset")
@@ -29,7 +31,8 @@ sessions <- sessionise(session_dataset, timestamp, uuid)
 # Calculate overall bounce rate
 count <- session_count(sessions)
 
-# Calculate bounce rate on a per-user basis
+# Calculate session count on a per-user basis
 per_user <- session_count(sessions, user_id = uuid)
+
 }
 

@@ -14,11 +14,11 @@ bounce_rate_internal <- function(x, places){
 #'@param sessions a sessions dataset, presumably generated with
 #'\code{\link{sessionise}}.
 #'
-#'@param precision the number of decimal places to round the output to
-#'- set to 2 by default.
-#'
 #'@param user_id a column that contains unique user IDs. NULL by default; if set, the assumption
 #'will be that you want \emph{per-user} bounce rates.
+#'
+#'@param precision the number of decimal places to round the output to
+#'- set to 2 by default.
 #'
 #'@return either a single numeric value, representing the percentage of sessions
 #'\emph{overall} that are bounces, or a data.frame of user IDs and bounce rates if
@@ -40,15 +40,15 @@ bounce_rate_internal <- function(x, places){
 #'per_user <- bounce_rate(sessions, user_id = uuid)
 #'
 #'@export
-bounce_rate <- function(sessions, precision = 2, user_id = NULL){
+bounce_rate <- function(sessions, user_id = NULL, precision = 2){
   
   user_id <- as.character(substitute(user_id))
   if(!length(user_id)){
-    return(bounce_rate_internal(sessions$session_id, decimal_places))
+    return(bounce_rate_internal(sessions$session_id, precision))
   }
   
   split_data <- split(x = sessions$session_id, f = sessions[,user_id])
-  to_output <- lapply(split_data, bounce_rate_internal, places = decimal_places)
+  to_output <- lapply(split_data, bounce_rate_internal, places = precision)
   return(data.frame(user_id = names(to_output),
                     bounce_rate = unlist(to_output),
                     stringsAsFactors = FALSE))
@@ -64,7 +64,7 @@ bounce_rate <- function(sessions, precision = 2, user_id = NULL){
 #'@param by_session Whether to generate time-on-page for the dataset overall (FALSE),
 #'or on a per-session basis (TRUE). FALSE by default.
 #'
-#'@param decimal_places the number of decimal places to round the output to
+#'@param precision the number of decimal places to round the output to
 #'- set to 2 by default.
 #'
 #'@param median whether to generate the median (TRUE) or mean (FALSE)
@@ -92,7 +92,7 @@ bounce_rate <- function(sessions, precision = 2, user_id = NULL){
 #'# Use median instead of mean
 #'top_med <- time_on_page(sessions, median = TRUE)
 #'
-#'@importFrom stats median
+#'@importFrom stats median aggregate
 #'@export
 time_on_page <- function(sessions, by_session = FALSE, median = FALSE,
                          precision = 2){
@@ -103,30 +103,48 @@ time_on_page <- function(sessions, by_session = FALSE, median = FALSE,
     func <- mean
   }
   
-  user_id <- as.character(substitute(user_id))
-  if(!length(user_id)){
+  if(!by_session){
     return(round(func(sessions$time_delta, na.rm = TRUE), digits = precision))
   }
   
-  output <- aggregate(formula = time_delta ~ session_id, data = sessions, FUN = func,
-                      na.action = NULL, na.rm = TRUE)
+  output <- stats::aggregate(formula = time_delta ~ session_id, data = sessions,
+                             FUN = func, na.action = NULL, na.rm = TRUE)
   output$time_delta <- round(output$time_delta, digits = precision)
   names(output)[names(output) == "time_delta"] <- "time_on_page"
   return(output)
 }
 
-session_length <- function(sessions, user_id = NULL){
+#'@title Calculate session length
+#'@description Calculate the overall length of each session.
+#'
+#'@param sessions a dataset of sessions, presumably generated with
+#'\code{\link{sessionise}}.
+#'
+#'@return a data.frame of two columns - \code{session_id}, containing unique
+#'session IDs, and \code{session_length}, containing the length (in seconds)
+#'of that particular session.
+#'
+#'Please note that these lengths should be considered a \emph{minimum};
+#'because of how sessions behave, calculating the time-on-page of the last
+#'event in a session is impossible.
+#'
+#'@seealso \code{\link{sessionise}} for session reconstruction, and
+#'\code{\link{time_on_page}}, \code{\link{session_count}} and
+#'\code{\link{bounce_rate}} for other session-related metrics.
+#'
+#'@examples
+#'#Load and sessionise the dataset
+#'data("session_dataset")
+#'sessions <- sessionise(session_dataset, timestamp, uuid)
+#'
+#'# Calculate session length
+#'len <- session_length(sessions)
+#'
+#'@export
+session_length <- function(sessions){
   
-  form <- paste("time_delta ~ session_id")
-  user_id <- as.character(substitute(user_id))
-  if(length(user_id)){
-    form <- paste(form, "+", user_id)
-  }
-  
-  form <- as.formula(form)
-  
-  output <- aggregate(formula = form, data = sessions, FUN = sum,
-                      na.action = NULL, na.rm = TRUE)
+  output <- stats::aggregate(formula = time_delta ~ session_id, data = sessions,
+                             FUN = sum, na.action = NULL, na.rm = TRUE)
   names(output)[names(output) == "time_delta"] <- "session_length"
   return(output)
 }
@@ -136,7 +154,7 @@ session_count_internal <- function(x){
 }
 
 #' @title Count the number of sessions in a sessionised dataset
-#' \code{link{session_count}} counts the number of sessions in a sessionised
+#' @description \code{link{session_count}} counts the number of sessions in a sessionised
 #' dataset, producing either a count for the overall dataset or on a per-user
 #' basis (see below).
 #' 
@@ -158,8 +176,10 @@ session_count_internal <- function(x){
 #' # Calculate overall bounce rate
 #' count <- session_count(sessions)
 #' 
-#' # Calculate bounce rate on a per-user basis
+#' # Calculate session count on a per-user basis
 #' per_user <- session_count(sessions, user_id = uuid)
+#' 
+#' @export
 session_count <- function(sessions, user_id = NULL){
   
   user_id <- as.character(substitute(user_id))

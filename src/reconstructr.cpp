@@ -13,7 +13,7 @@ void single_session(IntegerVector timestamps, IntegerVector& delta_output,
     for(unsigned int i = 1; i < timestamps.size(); i++){
       ts_iter_count++;
       delta_holding = (timestamps[i] - timestamps[i-1]);
-      if(delta_holding > threshold){
+      if(delta_holding >= threshold){
         delta_output[ts_iter_count] = NA_INTEGER;
         hash_reps.push_back(hash_rep_holding);
         hash_rep_holding = 1;

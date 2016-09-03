@@ -33,13 +33,15 @@
 #'# Take a dataset with URLs and similar metadata and sessionise it -
 #'# retaining that metadata
 #'
-#'sessionised_data <- sessionise(x = reconstructr::session_dataset,
+#'data("session_dataset")
+#'sessionised_data <- sessionise(x = session_dataset,
 #'                               timestamp = timestamp,
 #'                               user_id = uuid,
 #'                               threshold = 1800)
 #'
 #'@importFrom openssl md5
 #'@importFrom stats rnorm
+#'@export
 sessionise <- function(x, timestamp, user_id, threshold = 3600){
   
   timestamp <- as.character(substitute(timestamp))

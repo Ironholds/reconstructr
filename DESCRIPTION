@@ -1,15 +1,13 @@
 Package: reconstructr
 Type: Package
 Title: Session Reconstruction and Analysis
-Version: 1.1.1
+Version: 2.0.0.9000
 Date: 2016-08-31
 Author: Oliver Keyes
 Maintainer: Oliver Keyes <ironholds@gmail.com>
-Description: Functions to aid in reconstructing sessions
-    and efficiently calculating an array of metrics from the resulting data,
-    including bounce rate, time-on-page, and session length. Although primarily
-    designed for web data and analytics, its approach is plausibly applicable
-    to other domains.
+Description: Functions to reconstruct sessions from web log or other user trace data
+             and calculate various metrics around them, producing tabular,
+             output that is compatible with 'dplyr' or 'data.table' centered processes.
 License: MIT + file LICENSE
 LinkingTo: Rcpp
 Imports:
