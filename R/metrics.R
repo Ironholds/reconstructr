@@ -8,7 +8,7 @@ bounce_rate_internal <- function(x, places){
 }
 
 #'@title calculate the bounce rate within a session dataset
-#'@description calculates the "bounce rate" within a set of sessions - the proportion of sessions
+#'@description Calculates the "bounce rate" within a set of sessions - the proportion of sessions
 #'consisting only of a single event.
 #'
 #'@param sessions a sessions dataset, presumably generated with

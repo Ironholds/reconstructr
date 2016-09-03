@@ -22,7 +22,7 @@ either a single numeric value, representing the percentage of sessions
 \code{user_id} is set to a column rather than NULL.
 }
 \description{
-calculates the "bounce rate" within a set of sessions - the proportion of sessions
+Calculates the "bounce rate" within a set of sessions - the proportion of sessions
 consisting only of a single event.
 }
 \examples{

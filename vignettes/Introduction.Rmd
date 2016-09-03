@@ -46,6 +46,49 @@ str(sessionised_data)
 
 Sessionisation adds two new columns; 'session\_id', a unique per-session ID, and 'time\_delta' - the time between an event and the previous event in the session. If the event was the first (or only) one in a session, that value will be `NA`.
 
-Crucially, existing metadata (like URLs, or activity type) is carried along with the session information and not dropped. From the sessionised data we can compute a whole host of useful metrics, many of which have convenience functions in this package.
+Crucially, existing metadata (like URLs, or activity type) is carried along with the session information and not dropped.
+
+From the sessionised data we can compute a whole host of useful metrics, many of which have convenience functions in this package.
 
 ### Session metrics
+An important metric in session data is the bounce rate: the proportion of sessions that included only a single event. This represents (absent data quality issues) the number of sessions where a user took only one action and then simply left.
+
+It can be computed with `bounce_rate`, which takes a sessionised dataset and produces the percentage of sessions resulting in bounces. Optionally (if you provide an argument for the `user_id` parameter) it produces the bounce rate on a per-user basis, rather than for the dataset overall:
+
+```{r, eval=FALSE}
+
+str(bounce_rate(sessionised_data))
+
+num 20.7
+ 
+str(bounce_rate(sessionised_data, user_id = uuid))
+
+'data.frame':	10000 obs. of  2 variables:
+ $ user_id    : chr  "0005839b3e8483d50870f61f50307fa7" "000b047bad36484451f12c114ab5eb28" "000b2bc1a5438d8d54d4fbec139a2fd5" "001b6e80a14ba8d809c4ff18cdbade40" ...
+ $ bounce_rate: num  100 14.3 0 100 100 ...
+```
+
+`time_on_page` is very similar, calculating either the mean (or median) time between events - either for the dataset as a whole or, if the `by_session` parameter is TRUE, for each session:
+
+```{r, eval=FALSE}
+
+str(time_on_page(sessionised_data))
+
+num 146
+
+str(time_on_page(sessionised_data, by_session = TRUE))
+
+'data.frame':	22226 obs. of  2 variables:
+ $ session_id  : chr  "00011b1e098848edee7e50a2174fe6ef" "0001f6457a4d09a8c2092278fec89a89" "000451f0869b7eab3582c093ace0253d" "0004c56ace95f92ee12bf9552401f923" ...
+ $ time_on_page: num  NaN NaN NaN NaN NaN ...
+```
+
+(It's not broken, it just so happened the first few sessions contained no non-NA time deltas).
+
+Finally, `session_count` and `session_length` provide easy ways of identifying how many sessions are in a sessionised dataset (overall, or on a per-user basis) and how long those sessions are, respectively.
+
+
+
+### Other session functionality
+If you have ideas for other functionality that would make processing sessionseasier, the best approach
+is to either [request it](https://github.com/Ironholds/reconstructr/issues) or [add it](https://github.com/Ironholds/reconstructr/pulls)!
