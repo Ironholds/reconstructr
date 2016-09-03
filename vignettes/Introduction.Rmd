@@ -1,103 +1,51 @@
 ---
-title: "Introduction to reconstructr"
+title: "Session reconstruction in R"
 author: "Oliver Keyes"
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Introduction to reconstructr}
+  %\VignetteIndexEntry{Session reconstruction in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
 
-## Introduction to reconstructr
+## Session reconstruction in R
 
-Within web analytics, session reconstruction is an essential prerequisite of a host of useful and commonly-requested metrics, including time-on-site, time-on-page, and bounce rate. With reconstructr, we can conveniently divide
-user data into sessions and calculate a host of metrics from the resulting dataset.
+With trace data - from web logs, behavioural logs, really anything to do with user actions - reconstructing sessions (or 'sessionising') is essential. It lets an analyst divide up user actions into actual periods of sustained interaction, and from there compute a whole host of useful metrics,
+from session length to bounce rate.
 
-This vignette serves as an introduction to reconstructr, the approach it takes, and the functionality it provides.
+`reconstructr` is a library for just that - sessionisation and metric computation - in a way that keeps all the metadata about the events you're sessionising.
 
 ### Dividing events into sessions
 
-The nature of a "session" has provided fodder for researchers for years. Most people take an approach based on
-inactivity timeouts; if someone does not take an action in N seconds, their session has ended and
-a new one begins on their next registered action.
+The nature of a "session" has provided fodder for researchers for years. Most people take an approach based on inactivity thresholds; if someone does not take an action in N seconds, their session has ended and a new one begins on their next logged action.
 
-Using reconstructr, we can conveniently divide events into sessions with the `reconstruct_sessions` function. This takes a list of numeric vectors - each one containing the value, in seconds, of each event associated
-with a particular user - and divides them into sessions, splitting whenever the time between events is
-greater than `threshold` Timestamps can be converted to their representation in seconds with the `to_seconds` function.
+Using reconstructr, we can conveniently divide events into sessions with the `sessionise` function. This takes a data.frame of events (along with specifiers of which column contains the user ID, and which column contains the timestamp) and a threshold value (in seconds). When the time between events by a user crosses that threshold, the session ends and a new one begins.
+We can demonstrate this using reconstructr's inbuilt session dataset:
 
 ```{r, eval=FALSE}
 library(reconstructr)
-actions_by_user <- list(c(1417330230, 1417330250, 1417330295, 1417330324, 1417330416),
-                        c(1417401697, 1417401741, 1417401751, 1417403263))
-sessions <- reconstruct_sessions(timestamps = actions_by_user, threshold = 1800)
+data("session_dataset")
+
+str(session_dataset)
+'data.frame':	63524 obs. of  3 variables:
+ $ uuid     : chr  "47dc43895814861e21a2edf93348c826" "a736822df1890011694e7049cb3abef3" "674d2d00e096a3319874a4347caa1f4a" "f62d315398e6d04a3f2fa02e8ae42d49" ...
+ $ timestamp: POSIXlt, format: "2014-01-07 00:00:15" "2014-01-07 00:01:11" "2014-01-07 00:01:54" ...
+ $ url      : chr  "https://www.nasa.gov/history/mercury/mercury.html" "https://www.nasa.gov/images/ksclogosmall.gif" "https://www.nasa.gov/elv/hot.gif" "https://www.nasa.gov/facts/faq04.html" ...
+
+sessionised_data <- sessionise(x = session_dataset, timestamp = timestamp, user_id = uuid,
+                               threshold = 1800)
+
+str(sessionised_data)
+'data.frame':	63524 obs. of  5 variables:
+ $ uuid      : chr  "0005839b3e8483d50870f61f50307fa7" "000b047bad36484451f12c114ab5eb28" "000b047bad36484451f12c114ab5eb28" "000b047bad36484451f12c114ab5eb28" ...
+ $ timestamp : POSIXlt, format: "2014-01-14 12:47:59" "2014-01-07 14:25:11" "2014-01-09 12:47:17" ...
+ $ url       : chr  "https://www.nasa.gov/history/apollo/images/footprint-logo.gif" "https://www.nasa.gov/ksc.html" "https://www.nasa.gov/biomed/threat/gif/beachmousefinsmall.gif" "https://www.nasa.gov/shuttle/resources/orbiters/atlantis.html" ...
+ $ session_id: chr  "09cd65049020ed55472a2d8b1f47787e" "9dcb2f610297b3fe2c810907fa90fb8e" "70bcde51eff332d4ac820a90930f0f6e" "70bcde51eff332d4ac820a90930f0f6e" ...
+ $ time_delta: int  NA NA NA 45 4 75 274 47 NA 28 ...
 ```
 
-The appropriate value for N - which sessionise represents with the "threshold" argument - has been hotly debated for years, with most systems historically settling on a 30 minute (1800 second) approach. The default for reconstructr is an hour, or 3600 seconds, in line with recent research by  [Halfaker et al.](http://arxiv.org/abs/1411.2878) on the commonality of that threshold to a variety of websites and systems. Really, though, you can set it to whatever value is most appropriate to you: Halfaker et al also demonstrate a good way of working out the appropriate threshold.
+Sessionisation adds two new columns; 'session\_id', a unique per-session ID, and 'time\_delta' - the time between an event and the previous event in the session. If the event was the first (or only) one in a session, that value will be `NA`.
 
-### Calculating metrics
+Crucially, existing metadata (like URLs, or activity type) is carried along with the session information and not dropped. From the sessionised data we can compute a whole host of useful metrics, many of which have convenience functions in this package.
 
-Once you have your event dataset divided into sessions, you can easily take advantage of reconstructr to calculate a variety of useful and often-requested metrics, including the length of each session, the bounce rate in the dataset,
-and the time between events (or "time on page").
-
-#### Session length
-
-Calculating session length is easy, right? Just work out the time between each pair of events, and add them together.
-Except...
-
-1. What do we do about sessions with only one event?
-2. How do we work out the time spent idling on the last event, since there's no timestamp to compare it to?
-
-Different people have different approaches to this; Google Analytics, for example, [entirely discounts sessions consisting of single events](https://support.google.com/analytics/answer/1009409?hl=en), and also ignores [time after the last event](https://support.google.com/analytics/answer/1006253?hl=en). Other approaches are to generate
-a "padding value" - based on looking at the between-event times that *can* be estimated - and using that for single-event sessions, or for the final event in a session, or both.
-
-Rather than making you pick a methodology you may not agree with, reconstructr allows you to pick your favoured approach and experiment with others, using the ` session_length ` function:
-
-Session length can be calculated using the `session_length` function. With the dataset from above,
-as an example:
-
-```{r, eval=FALSE}
-length_of_sessions <- session_length(sessions, padding_value = 430, preserve_single_events = FALSE, strip_last = FALSE)
-```
-
-With the options present, you can preserve single events (or remove them), strip the last event in a session and ignore it (or not), and modify the padding value to something that best suits your database - which the function `padding_value` can be used to estimate.
-
-#### Events per session
-
-Events per session is a far easier metric to think through, and can be calculated using the `session_events` function:
-```{r, eval=FALSE}
-events_per_session <- session_events(sessions)
-```
-
-This simply gives you a vector, each entry containing a count of how many events were in that session.
-
-#### Bounce rate
-
-The bounce rate is the measure of what proportion of sessions within a dataset consist of only a single event:
-in other words, the percentage of sessions in which the user saw one page and, one way or another, left the site.
-
-This can be calculated conveniently with `bounce_rate`:
-
-```{r, eval=FALSE}
-bounce_rate <- session_events(sessions, decimal_places = 2)
-```
-
-"sessions" refers to the output of a `sessionise` call; "decimal_places" controls how closely the
-resulting percentage should be rounded.
-
-#### Time on page
-
-Time on page, or the time between events, is easily calculated by looking at the time between each pair of events
-within a session. The reconstructr implementation of this is `event_time` which produces either a vector
-or a list of time-on-page values, depending on user choice:
-
-```{r, eval=FALSE}
-time_on_page <- event_time(sessions, as_vector = FALSE, fun, ...)
-```
-
-Not only can you use this to calculate time-on-page, you can also perform statistical transformations on the resulting data. "fun" takes a function (with `...` used to pass any further arguments to it) which is run over
-the data, and the results from that run returned. This means that you can conveniently produce a single number
-through calls like:
-
-```{r, eval=FALSE}
-average_time_on_page <- event_time(sessions, as_vector = FALSE, mean)
-```
+### Session metrics
