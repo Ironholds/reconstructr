@@ -5,54 +5,6 @@
 
 using namespace Rcpp;
 
-// reconstruct_sessions
-std::list < std::vector < int > > reconstruct_sessions(std::list < std::vector < int > > timestamps, int threshold);
-RcppExport SEXP reconstructr_reconstruct_sessions(SEXP timestampsSEXP, SEXP thresholdSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::list < std::vector < int > > >::type timestamps(timestampsSEXP);
-    Rcpp::traits::input_parameter< int >::type threshold(thresholdSEXP);
-    __result = Rcpp::wrap(reconstruct_sessions(timestamps, threshold));
-    return __result;
-END_RCPP
-}
-// session_length
-std::vector < int > session_length(std::list < std::vector < int > > sessions, int padding_value, bool preserve_single_events, bool strip_last);
-RcppExport SEXP reconstructr_session_length(SEXP sessionsSEXP, SEXP padding_valueSEXP, SEXP preserve_single_eventsSEXP, SEXP strip_lastSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::list < std::vector < int > > >::type sessions(sessionsSEXP);
-    Rcpp::traits::input_parameter< int >::type padding_value(padding_valueSEXP);
-    Rcpp::traits::input_parameter< bool >::type preserve_single_events(preserve_single_eventsSEXP);
-    Rcpp::traits::input_parameter< bool >::type strip_last(strip_lastSEXP);
-    __result = Rcpp::wrap(session_length(sessions, padding_value, preserve_single_events, strip_last));
-    return __result;
-END_RCPP
-}
-// session_events
-std::vector < int > session_events(std::list < std::vector < int > > sessions);
-RcppExport SEXP reconstructr_session_events(SEXP sessionsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::list < std::vector < int > > >::type sessions(sessionsSEXP);
-    __result = Rcpp::wrap(session_events(sessions));
-    return __result;
-END_RCPP
-}
-// c_time_per_event
-std::list < std::vector < int > > c_time_per_event(std::list < std::vector < int > > sessions);
-RcppExport SEXP reconstructr_c_time_per_event(SEXP sessionsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::list < std::vector < int > > >::type sessions(sessionsSEXP);
-    __result = Rcpp::wrap(c_time_per_event(sessions));
-    return __result;
-END_RCPP
-}
 // sessionise_
 List sessionise_(List split_timestamps, int threshold, int out_nrow);
 RcppExport SEXP reconstructr_sessionise_(SEXP split_timestampsSEXP, SEXP thresholdSEXP, SEXP out_nrowSEXP) {

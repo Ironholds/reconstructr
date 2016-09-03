@@ -4,31 +4,37 @@
 \alias{bounce_rate}
 \title{calculate the bounce rate within a session dataset}
 \usage{
-bounce_rate(sessions, decimal_places = 2)
+bounce_rate(sessions, decimal_places = 2, user_id = NULL)
 }
 \arguments{
-\item{sessions}{a list of sessions, generated with \code{\link{reconstruct_sessions}}}
+\item{sessions}{a sessions dataset, presumably generated with
+\code{\link{sessionise}}.}
 
-\item{decimal_places}{the number of decimal places to round the output to - set to 2 by default.}
+\item{decimal_places}{the number of decimal places to round the output to
+- set to 2 by default.}
+
+\item{user_id}{a column that contains unique user IDs. NULL by default; if set, the assumption
+will be that you want \emph{per-user} bounce rates.}
 }
 \value{
-a single numeric value, representing the percentage of sessions that are bounces.
+either a single numeric value, representing the percentage of sessions
+\emph{overall} that are bounces, or a data.frame of user IDs and bounce rates if
+\code{user_id} is set to a column rather than NULL.
 }
 \description{
 calculates the "bounce rate" within a set of sessions - the proportion of sessions
 consisting only of a single event.
 }
 \examples{
-#Calculate the bounce rate in the provided dataset.
-#Load, convert timestamps to seconds, split
+#Load and sessionise the dataset
 data("session_dataset")
-session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "\%Y\%m\%d\%H\%M\%S")
-events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
+sessions <- sessionise(session_dataset, timestamp, uuid)
 
-#Sessionise and calculate bounce rate
-sessions <- reconstruct_sessions(events_by_user)
-bounce_rate(sessions)
-#[1]58
+# Calculate overall bounce rate
+rate <- bounce_rate(sessions)
+
+# Calculate bounce rate on a per-user basis
+per_user <- bounce_rate(sessions, user_id = uuid)
 }
 \seealso{
 \code{\link{session_events}} for generaliseable event-level calculations, and

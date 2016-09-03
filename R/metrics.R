@@ -1,87 +1,128 @@
+bounce_rate_internal <- function(x, places){
+  return(round(
+    (
+      length(x[!x %in% x[duplicated(x)]]) / length(x)
+    ) * 100,
+    digits = places
+  ))
+}
+
 #'@title calculate the bounce rate within a session dataset
 #'@description calculates the "bounce rate" within a set of sessions - the proportion of sessions
 #'consisting only of a single event.
 #'
-#'@param sessions a list of sessions, generated with \code{\link{reconstruct_sessions}}
+#'@param sessions a sessions dataset, presumably generated with
+#'\code{\link{sessionise}}.
 #'
-#'@param decimal_places the number of decimal places to round the output to - set to 2 by default.
+#'@param decimal_places the number of decimal places to round the output to
+#'- set to 2 by default.
 #'
-#'@return a single numeric value, representing the percentage of sessions that are bounces.
+#'@param user_id a column that contains unique user IDs. NULL by default; if set, the assumption
+#'will be that you want \emph{per-user} bounce rates.
+#'
+#'@return either a single numeric value, representing the percentage of sessions
+#'\emph{overall} that are bounces, or a data.frame of user IDs and bounce rates if
+#'\code{user_id} is set to a column rather than NULL.
 #'
 #'@seealso \code{\link{session_events}} for generaliseable event-level calculations, and
 #'\code{link{event_time}} for performing operations on the time between events.
 #'
 #'@examples
-#'#Calculate the bounce rate in the provided dataset.
-#'#Load, convert timestamps to seconds, split
+#'#Load and sessionise the dataset
 #'data("session_dataset")
-#'session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
-#'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
+#'sessions <- sessionise(session_dataset, timestamp, uuid)
 #'
-#'#Sessionise and calculate bounce rate
-#'sessions <- reconstruct_sessions(events_by_user)
-#'bounce_rate(sessions)
-#'#[1]58
+#'# Calculate overall bounce rate
+#'rate <- bounce_rate(sessions)
+#'
+#'# Calculate bounce rate on a per-user basis
+#'per_user <- bounce_rate(sessions, user_id = uuid)
 #'@export
-bounce_rate <- function(sessions, decimal_places = 2){
-  events <- session_events(sessions)
-  return(round((length(events[events == 1])/(length(events))), digits = decimal_places)*100)
+bounce_rate <- function(sessions, decimal_places = 2, user_id = NULL){
+  
+  if(is.null(user_id)){
+    return(bounce_rate_internal(sessions$session_id, decimal_places))
+  }
+  
+  user_id <- as.character(substitute(user_id))
+  
+  split_data <- split(x = sessions$session_id, f = sessions[,user_id])
+  to_output <- lapply(split_data, bounce_rate_internal, places = decimal_places)
+  return(data.frame(user_id = names(to_output),
+                    bounce_rate = unlist(to_output),
+                    stringsAsFactors = FALSE))
 }
 
-#'@title calculate the time between each event in a session, or set of sessions
-#'@description As well as \code{\link{session_length}}, which calculates the length
-#'of a session, \code{event_time} extracts the length of time between each event
-#'(which can be used for purposes such as counting the likely time-on-page, in the
-#'context of web analytics). It allows you to customise
-#'the output format and optionally run analytical functions against
-#'the results before they are returned.
-#'
-#'@param sessions a list of sessions, generated with \code{\link{reconstruct_sessions}}
-#'
-#'@param as_vector whether to unlist the results and return them as a vector,
-#'or return them as a list. Set to TRUE (vector) by default. In the event that you
-#'are setting a value for "fun", your choice may impact the way the function
-#'operates over the results
-#'
-#'@param fun an optional parameter indicating a function to pass over the results,
-#'before they are returned.
-#'
-#'@param ... optional arguments to pass to fun
-#'
-#'@return a list, a vector, or the output format of \code{fun}
-#'
-#'@seealso \code{\link{session_length}} for calculating the length of time
-#'spent within a session
-#'
-#'@examples
-#'#Load, convert timestamps to seconds, split
-#'data("session_dataset")
-#'session_dataset$timestamp <- to_seconds(x = session_dataset$timestamp, format = "%Y%m%d%H%M%S")
-#'events_by_user <- split(session_dataset$timestamp, session_dataset$UUID)
-#'sessions <- reconstruct_sessions(events_by_user)
-#'
-#'#Extract the time between events, separating out the results for each session
-#'list_event_time <- event_time(sessions, as_vector = FALSE)
-#'
-#'#Extract the arithmetic mean time between events
-#'mean_event_time <- event_time(sessions, as.vector = TRUE, fun = mean, trim = 0.5)
-#'
-#'@export
-#'
-#'@rdname event_time
-event_time <- function(sessions, as_vector = TRUE, fun, ...){
+time_on_page_internal <- function(x, func, precision){
+  return(round(func(x, na.rm = TRUE), digits = precision))
+}
+
+time_on_page <- function(sessions, precision = 2, user_id = NULL, median = FALSE){
   
-  #Grab intertimes
-  intertimes <- c_time_per_event(sessions)
-  
-  if(as_vector){
-    intertimes <- unlist(intertimes)
-  }
-  
-  #And now we play the control flow game!
-  if(missing("fun")){
-    return(intertimes)
+  if(median){
+    func <- stats::median
   } else {
-    return(fun(sessions, ...))
+    func <- mean
   }
+  
+  if(is.null(user_id)){
+    return(time_on_page_internal(sessions$time_delta, func, precision))
+  }
+  
+  split_data <- split(x = sessions$time_delta, f = sessions[,user_id])
+  to_output <- lapply(split_data, time_on_page_internal, func, precision)
+  return(data.frame(user_id = names(to_output),
+                    time_on_page = unlist(to_output),
+                    stringsAsFactors = FALSE))
+}
+
+session_length_internal <- function(x){
+  #ave?
+}
+session_length <- function(sessions, user_id = NULL){
+  
+}
+
+session_count_internal <- function(x){
+  return(length(unique(x)))
+}
+
+#' @title Count the number of sessions in a sessionised dataset
+#' \code{link{session_count}} counts the number of sessions in a sessionised
+#' dataset, producing either a count for the overall dataset or on a per-user
+#' basis (see below).
+#' 
+#' @param sessions a dataset of sessions, presumably generated by
+#' \code{\link{sessionise}}
+#' 
+#' @param user_id the column of \code{sessions} containing user IDs. If
+#' NULL (the default), a single count of sessions for the entire dataset
+#' will be generated. Otherwise, a data.frame of user IDs and the session
+#' count for each user ID will be returned.
+#' 
+#' @return either a single integer value or a data.frame (see above).
+#' 
+#' @examples
+#' #Load and sessionise the dataset
+#' data("session_dataset")
+#' sessions <- sessionise(session_dataset, timestamp, uuid)
+#' 
+#' # Calculate overall bounce rate
+#' count <- session_count(sessions)
+#' 
+#' # Calculate bounce rate on a per-user basis
+#' per_user <- session_count(sessions, user_id = uuid)
+session_count <- function(sessions, user_id = NULL){
+  
+  if(is.null(user_id)){
+    return(session_count_internal(sessions$session_id))
+  }
+  
+  user_id <- as.character(substitute(user_id))
+  
+  split_data <- split(x = sessions$session_id, f = sessions[,user_id])
+  to_output <- lapply(split_data, session_count_internal)
+  return(data.frame(user_id = names(to_output),
+                    session_count = unlist(to_output),
+                    stringsAsFactors = FALSE))
 }

@@ -6,11 +6,12 @@
 #'one containing a unique session ID, and one the time difference between
 #'successive events in the same session.
 #'
-#'@param x a data.frame of events
+#'@param x a data.frame of events.
 #'
 #'@param timestamp the name of the column of \code{x} containing timestamps,
 #'which should be (either) a representation of the number of seconds, or a
-#'POSIXct or POSIXlt date/time object.
+#'POSIXct or POSIXlt date/time object. If it is neither, \code{\link{strptime}}
+#'can be used to convert most representations of date-times into POSIX formats.
 #'
 #'@param user_id the name of the column of \code{x} containing unique user IDs.
 #'
@@ -24,7 +25,7 @@
 #'and the previous event, if they were both in the same session).
 #'
 #'@seealso
-#'\code{\link{bounce_rate}}, \count{\link{time_on_page}},
+#'\code{\link{bounce_rate}}, \code{\link{time_on_page}},
 #'\code{\link{session_length}} and \code{\link{session_count}} - common metrics
 #'that can be calculated with a sessionised dataset.
 #'
@@ -32,10 +33,11 @@
 #'# Take a dataset with URLs and similar metadata and sessionise it -
 #'# retaining that metadata
 #'
-#'sessionised_data <- sessionise(x = reconstructr::event_dataset,
+#'sessionised_data <- sessionise(x = reconstructr::session_dataset,
 #'                               timestamp = timestamp,
-#'                               user_id = UUID,
+#'                               user_id = uuid,
 #'                               threshold = 1800)
+#'
 #'@importFrom openssl md5
 #'@importFrom stats rnorm
 sessionise <- function(x, timestamp, user_id, threshold = 3600){
@@ -45,17 +47,17 @@ sessionise <- function(x, timestamp, user_id, threshold = 3600){
   
   if(!is.numeric(x[,timestamp])){
     if("POSIXt" %in% class(x[,timestamp])){
-      ts <- as.integer(x[,timestamp])
+      ts <- as.numeric(x[,timestamp])
       to_sessionise <- split(x = ts, f = x[, user_id], drop = TRUE)
     } else {
       stop("The timestamp column must be a numeric representation of the number
            of seconds, or a date/time object. See ?sessionise for details")
     }
-    } else {
-      to_sessionise <- split(x = x[, timestamp], f = x[, user_id], drop = TRUE)
+  } else {
+    to_sessionise <- split(x = x[, timestamp], f = x[, user_id], drop = TRUE)
   }
   
-  orders <- order(x[,timestamp], x[,user_id], method = "radix")
+  x <- x[order(x[,user_id], x[,timestamp], method = "radix"),]
   holding <- sessionise_(split_timestamps = to_sessionise,
                          threshold = threshold,
                          out_nrow = nrow(x))
@@ -63,9 +65,8 @@ sessionise <- function(x, timestamp, user_id, threshold = 3600){
   # Look into hooking into this on the compiled code side maybe?
   hashes <- as.character(openssl::md5(x = as.character(seq_len(length(holding$hash_reps))),
                                       key = as.character(stats::rnorm(1))))
-  
   return(cbind(x,
-               data.frame(session_id = rep(x = hashes, holding$hash_reps)[orders],
-                          time_delta = holding$delta[orders],
+               data.frame(session_id = rep(x = hashes, holding$hash_reps),
+                          time_delta = holding$delta,
                           stringsAsFactors = FALSE)))
 }

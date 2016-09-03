@@ -7,11 +7,12 @@
 sessionise(x, timestamp, user_id, threshold = 3600)
 }
 \arguments{
-\item{x}{a data.frame of events}
+\item{x}{a data.frame of events.}
 
 \item{timestamp}{the name of the column of \code{x} containing timestamps,
 which should be (either) a representation of the number of seconds, or a
-POSIXct or POSIXlt date/time object.}
+POSIXct or POSIXlt date/time object. If it is neither, \code{\link{strptime}}
+can be used to convert most representations of date-times into POSIX formats.}
 
 \item{user_id}{the name of the column of \code{x} containing unique user IDs.}
 
@@ -36,13 +37,14 @@ successive events in the same session.
 # Take a dataset with URLs and similar metadata and sessionise it -
 # retaining that metadata
 
-sessionised_data <- sessionise(x = reconstructr::event_dataset,
+sessionised_data <- sessionise(x = reconstructr::session_dataset,
                               timestamp = timestamp,
-                              user_id = UUID,
+                              user_id = uuid,
                               threshold = 1800)
+
 }
 \seealso{
-\code{\link{bounce_rate}}, \count{\link{time_on_page}},
+\code{\link{bounce_rate}}, \code{\link{time_on_page}},
 \code{\link{session_length}} and \code{\link{session_count}} - common metrics
 that can be calculated with a sessionised dataset.
 }
