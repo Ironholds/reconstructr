@@ -1,9 +1,8 @@
-##reconstructr
-A package for session reconstruction and analysis in R.
+## Session reconstruction and analysis in R
 
 __Author:__ Oliver Keyes<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
-__Status:__ In development
+__Status:__ Stable
 
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/reconstructr)
 
