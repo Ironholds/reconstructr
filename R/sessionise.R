@@ -59,7 +59,7 @@ sessionise <- function(x, timestamp, user_id, threshold = 3600){
     to_sessionise <- split(x = x[, timestamp], f = x[, user_id], drop = TRUE)
   }
   
-  eval(reconstructr_env$order_expr)
+  x <- x[order(x[,user_id], x[,timestamp], method = "radix"),]
   holding <- sessionise_(split_timestamps = to_sessionise,
                          threshold = threshold,
                          out_nrow = nrow(x))
