@@ -6,7 +6,7 @@ __Status:__ Stable
 
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/reconstructr)
 
-###Description
+### Description
 
 A well-studied part of web analytics and human-computer interaction is
 the concept of a "session": a series of linked user actions. This is used
@@ -37,7 +37,7 @@ For the development version:
     library(devtools)
     install_github("ironholds/reconstructr")
     
-###Dependencies
+### Dependencies
 * R. Doy.
 * [Rcpp](https://cran.r-project.org/package=Rcpp)
 
