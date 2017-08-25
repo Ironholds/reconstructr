@@ -35,4 +35,3 @@ count <- session_count(sessions)
 per_user <- session_count(sessions, user_id = uuid)
 
 }
-

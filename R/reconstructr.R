@@ -7,6 +7,6 @@
 #'approach is plausibly applicable to other domains.
 #'@name reconstructr
 #'@importFrom Rcpp evalCpp
-#'@useDynLib reconstructr
+#'@useDynLib reconstructr, .registration = TRUE
 #'@aliases reconstructr reconstructr-package
 NULL

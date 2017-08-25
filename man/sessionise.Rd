@@ -49,4 +49,3 @@ sessionised_data <- sessionise(x = session_dataset,
 \code{\link{session_length}} and \code{\link{session_count}} - common metrics
 that can be calculated with a sessionised dataset.
 }
-

@@ -42,4 +42,3 @@ per_user <- bounce_rate(sessions, user_id = uuid)
 \code{\link{session_length}}, \code{\link{session_count}} and
 \code{\link{time_on_page}} for other session-related metrics.
 }
-

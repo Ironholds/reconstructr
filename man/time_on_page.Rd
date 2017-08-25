@@ -48,4 +48,3 @@ top_med <- time_on_page(sessions, median = TRUE)
 \code{\link{session_length}}, \code{\link{session_count}} and
 \code{\link{bounce_rate}} for other session-related metrics.
 }
-

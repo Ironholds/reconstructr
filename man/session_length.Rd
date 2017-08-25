@@ -36,4 +36,3 @@ len <- session_length(sessions)
 \code{\link{time_on_page}}, \code{\link{session_count}} and
 \code{\link{bounce_rate}} for other session-related metrics.
 }
-

@@ -23,4 +23,3 @@ an example dataset of events, for experimenting with
 session reconstruction and analysis
 }
 \keyword{datasets}
-

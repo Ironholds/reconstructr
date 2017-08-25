@@ -19,5 +19,5 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/Ironholds/reconstructr
 BugReports: https://github.com/Ironholds/reconstructr/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Depends: R (>= 3.3.0)

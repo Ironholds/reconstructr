@@ -4,6 +4,7 @@
 \name{reconstructr}
 \alias{reconstructr}
 \alias{reconstructr-package}
+\alias{reconstructr-package}
 \title{functions for session reconstruction and analysis}
 \description{
 sessionreconstruct provides functions to aid in reconstructing and analysing user sessions.
@@ -13,4 +14,3 @@ approach is plausibly applicable to other domains.
 \author{
 Oliver Keyes <okeyes@wikimedia.org>
 }
-
