@@ -4,7 +4,7 @@ __Author:__ Oliver Keyes<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
 __Status:__ Stable
 
-![downloads](http://cranlogs.r-pkg.org/badges/grand-total/reconstructr)
+[![Travis-CI Build Status](https://travis-ci.org/Ironholds/reconstructr.svg?branch=master)](https://travis-ci.org/Ironholds/reconstructr) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/reconstructr)](https://cran.r-project.org/package=reconstructr) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/reconstructr)
 
 ### Description
 
