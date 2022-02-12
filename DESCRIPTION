@@ -1,15 +1,16 @@
 Package: reconstructr
 Type: Package
 Title: Session Reconstruction and Analysis
-Version: 2.0.2
-Date: 2018-07-26
-Author: Oliver Keyes
-Maintainer: Oliver Keyes <ironholds@gmail.com>
+Version: 2.0.3
+Date: 2022-02-12
+Author: Os Keyes
+Maintainer: Os Keyes <ironholds@gmail.com>
 Description: Functions to reconstruct sessions from web log or other user trace data
              and calculate various metrics around them, producing tabular,
              output that is compatible with 'dplyr' or 'data.table' centered processes.
 License: MIT + file LICENSE
 LinkingTo: Rcpp
+Encoding: UTF-8
 Imports:
     Rcpp,
     openssl
@@ -19,5 +20,5 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/Ironholds/reconstructr
 BugReports: https://github.com/Ironholds/reconstructr/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.2
 Depends: R (>= 3.3.0)

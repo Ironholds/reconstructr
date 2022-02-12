@@ -1,3 +1,6 @@
+Version 2.0.3
+* Tweak for CRAN compliance
+
 Version 2.0.2
 * Minor Makevars tweak for CRAN compliance
 

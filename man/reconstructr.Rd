@@ -4,7 +4,6 @@
 \name{reconstructr}
 \alias{reconstructr}
 \alias{reconstructr-package}
-\alias{reconstructr-package}
 \title{functions for session reconstruction and analysis}
 \description{
 sessionreconstruct provides functions to aid in reconstructing and analysing user sessions.
